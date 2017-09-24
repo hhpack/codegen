@@ -18,6 +18,10 @@ final class PackageClassGenerator implements ClassFileGeneratable {
 
   public function __construct(private ICodegenFactory $cg) {}
 
+  public static function from(ICodegenFactory $factory): this {
+    return new self($factory);
+  }
+
   public function generate(GenerateClass $class): CodegenFile {
     return
       $this->cg

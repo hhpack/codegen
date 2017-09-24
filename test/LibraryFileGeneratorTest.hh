@@ -20,11 +20,13 @@ final class LibraryFileGeneratorTest {
   <<SuiteProvider('Factory')>>
   public static function generatorFactory(): this {
     $namespace = new OutputNamespace('Foo\\Bar', getcwd().'/tmp');
-    $config = new HackCodegenConfig($namespace->path());
-    $generator = new TestClassGenerator(new HackCodegenFactory($config));
-
     $libraryGenerator = LibraryFileGenerator::fromItems(
-      [Pair {GenerateType::TestClass, Pair {$namespace, $generator}}],
+      [
+        Pair {
+          GenerateType::TestClass,
+          Pair {$namespace, TestClassGenerator::class},
+        },
+      ],
     );
 
     return new self($libraryGenerator);

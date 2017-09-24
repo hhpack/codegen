@@ -1,7 +1,5 @@
 <?hh //strict
 
-namespace HHPack\Codegen;
-
 /**
  * This file is part of hhpack\codegen.
  *
@@ -10,6 +8,10 @@ namespace HHPack\Codegen;
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
+
+namespace HHPack\Codegen;
+
+use Facebook\HackCodegen\{HackCodegenConfig, HackCodegenFactory};
 
 final class OutputNamespace {
 
@@ -50,6 +52,14 @@ final class OutputNamespace {
     $namespace = $this->belongsNamespace($subNamespace);
 
     return new OutputClassName($namespace, $className);
+  }
+
+  public function createGenerator<Tu as ClassFileGeneratable>(
+    classname<Tu> $className,
+  ): ClassFileGenerator {
+    $config = new HackCodegenConfig($this->mappedPath);
+    $factory = new HackCodegenFactory($config);
+    return new ClassFileGenerator($this, $className::from($factory));
   }
 
 }

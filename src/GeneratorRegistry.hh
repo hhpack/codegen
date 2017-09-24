@@ -1,7 +1,5 @@
 <?hh //strict
 
-namespace HHPack\Codegen;
-
 /**
  * This file is part of hhpack\codegen.
  *
@@ -11,19 +9,24 @@ namespace HHPack\Codegen;
  * with this source code in the file LICENSE.
  */
 
+namespace HHPack\Codegen;
+
 final class GeneratorRegistry {
   private ImmMap<GenerateType, ClassFileGenerator> $registry;
 
   public function __construct(
     Traversable<Pair<GenerateType,
-    Pair<OutputNamespace, ClassFileGeneratable>>> $generators,
+    Pair<OutputNamespace, classname<ClassFileGeneratable>>>> $generators,
   ) {
     $items =
       ImmVector::fromItems($generators)->map(
         ($generator) ==> {
           list($type, $namespaceGenerator) = $generator;
-          list($ns, $fgen) = $namespaceGenerator;
-          return Pair {$type, new ClassFileGenerator($ns, $fgen)};
+          list($namespace, $generatorClassName) = $namespaceGenerator;
+          return Pair {
+            $type,
+            $namespace->createGenerator($generatorClassName),
+          };
         },
       );
     $this->registry = ImmMap::fromItems($items);
