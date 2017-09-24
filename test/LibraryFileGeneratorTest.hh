@@ -23,7 +23,7 @@ final class LibraryFileGeneratorTest {
     $libraryGenerator = LibraryFileGenerator::fromItems(
       [
         Pair {
-          GenerateType::TestClass, $namespace->createGenerator(TestClassGenerator::class)
+          GenerateType::TestClass, $namespace->map(TestClassGenerator::class)
         },
       ],
     );
