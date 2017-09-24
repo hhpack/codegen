@@ -15,21 +15,9 @@ final class GeneratorRegistry {
   private ImmMap<GenerateType, ClassFileGenerator> $registry;
 
   public function __construct(
-    Traversable<Pair<GenerateType,
-    Pair<OutputNamespace, classname<ClassFileGeneratable>>>> $generators,
+    Traversable<Pair<GenerateType, ClassFileGenerator>> $generators
   ) {
-    $items =
-      ImmVector::fromItems($generators)->map(
-        ($generator) ==> {
-          list($type, $namespaceGenerator) = $generator;
-          list($namespace, $generatorClassName) = $namespaceGenerator;
-          return Pair {
-            $type,
-            $namespace->createGenerator($generatorClassName),
-          };
-        },
-      );
-    $this->registry = ImmMap::fromItems($items);
+    $this->registry = ImmMap::fromItems($generators);
   }
 
   public function get(GenerateType $type): ClassFileGenerator {

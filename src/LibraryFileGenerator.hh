@@ -26,8 +26,7 @@ final class LibraryFileGenerator
   }
 
   public static function fromItems(
-    Traversable<Pair<GenerateType,
-    Pair<OutputNamespace, classname<ClassFileGeneratable>>>> $generators,
+    Traversable<Pair<GenerateType, ClassFileGenerator>> $generators,
   ): this {
     return new self(new GeneratorRegistry($generators));
   }
