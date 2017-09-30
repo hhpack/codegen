@@ -16,7 +16,7 @@ use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use function HHPack\Getopt\{ optparser, take_on, on };
 use HHPack\Getopt\Parser\{OptionParser};
-use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig};
+use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig, CodegenFileResult};
 
 final class Codegen {
   const string PROGRAM_NAME = 'codegen';
@@ -51,8 +51,6 @@ final class Codegen {
 
     $remainArgs = $this->optionParser->parse($args);
 
-    echo "run", PHP_EOL;
-
     if ($this->help) {
       $this->displayHelp();
     } else if ($this->version) {
@@ -66,11 +64,20 @@ final class Codegen {
     }
   }
 
-  private function generateBy(Pair<GenerateType, string> $generateFile): void {
+  private function generateBy(Pair<GenerateType, string> $generateClass): void {
     $generators = $this->loadGeneratorProvider()->generators();
 
     $generator = LibraryFileGenerator::fromItems($generators);
-    $generator->generate($generateFile)->save();
+    $classFile = $generator->generate($generateClass);
+    $result = $classFile->save();
+
+    if ($result === CodegenFileResult::CREATE) {
+      fwrite(STDOUT, sprintf("File %s is created\n", $classFile->getFileName()));
+    } else if ($result === CodegenFileResult::UPDATE) {
+      fwrite(STDOUT, sprintf("File %s is updated\n", $classFile->getFileName()));
+    } else if ($result === CodegenFileResult::NONE) {
+      fwrite(STDOUT, sprintf("File %s is already exists\n", $classFile->getFileName()));
+    }
   }
 
   private function loadGeneratorProvider(): CodegenGenerators {
