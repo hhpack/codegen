@@ -13,7 +13,7 @@ namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{OutputNamespace, GenerateType, ClassFileGenerator};
 
-function generate_namespace_of(string $name, string $path): OutputNamespace {
+function namespace_of(string $name, string $path): OutputNamespace {
   return new OutputNamespace($name, $path);
 }
 

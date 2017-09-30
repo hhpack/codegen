@@ -20,7 +20,7 @@ namespace MyPackage\Generators;
 use HHPack\Codegen\Cli\{ CodegenGenerators };
 use HHPack\Codegen\HackUnit\{ TestClassGenerator };
 use HHPack\Codegen\Project\{ PackageClassGenerator };
-use function HHPack\Codegen\Cli\{ generate_namespace_of, library, library_test };
+use function HHPack\Codegen\Cli\{ namespace_of, library, library_test };
 
 final class Generators implements CodegenGenerators {
 
@@ -31,12 +31,12 @@ final class Generators implements CodegenGenerators {
   public function generators(): Iterator<Pair<GenerateType, ClassFileGenerator>> {
 	// Link package namespace to generator
     yield library(
-      generate_namespace_of(static::PACKAGE_NAMESPACE, 'src')
+      namespace_of(static::PACKAGE_NAMESPACE, 'src')
         ->map(PackageClassGenerator::class));
 
 	// Link package test namespace to generator
     yield library_test(
-      generate_namespace_of(static::PACKAGE_TEST_NAMESPACE, 'test')
+      namespace_of(static::PACKAGE_TEST_NAMESPACE, 'test')
         ->map(TestClassGenerator::class));
   }
 }
