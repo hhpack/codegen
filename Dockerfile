@@ -16,7 +16,6 @@ WORKDIR project
 ADD src src
 ADD test test
 ADD example example
-ADD tmp tmp
 ADD composer.json composer.json
 ADD hh_autoload.json hh_autoload.json
 ADD .hhconfig .hhconfig
