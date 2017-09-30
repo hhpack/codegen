@@ -14,21 +14,23 @@ final class ClassFileGeneratorTest {
   public function __construct(
     private ClassFileGenerator $generator,
     private OutputNamespace $namespace,
+    private string $tempDirectory
   ) {}
 
   <<SuiteProvider('Factory')>>
   public static function generatorFactory(): this {
-    $namespace = new OutputNamespace('Foo\\Bar', getcwd().'/tmp');
+    $tempDirectory = sys_get_temp_dir();
+    $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
     $config = new HackCodegenConfig($namespace->path());
     $generator = new TestClassGenerator(new HackCodegenFactory($config));
 
     return
-      new self(new ClassFileGenerator($namespace, $generator), $namespace);
+      new self(new ClassFileGenerator($namespace, $generator), $namespace, $tempDirectory);
   }
 
   <<Setup('Factory')>>
   public function removeClassFile(): void {
-    $file = getcwd().'/tmp/Test/Test1.hh';
+    $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
 
     if (!file_exists($file)) {
       return;
@@ -39,8 +41,9 @@ final class ClassFileGeneratorTest {
   <<Test('Factory')>>
   public function test(Assert $assert): void {
     $this->generator->generate(static::GENERATE_CLASS_NAME)->save();
+    $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
 
-    $assert->bool(file_exists(getcwd().'/tmp/Test/Test1.hh'))->is(true);
+    $assert->bool(file_exists($file))->is(true);
   }
 
 }
