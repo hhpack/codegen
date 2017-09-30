@@ -6,18 +6,7 @@ use HHPack\Codegen\{ OutputNamespace, GenerateType, ClassFileGenerator };
 use HHPack\Codegen\Cli\{ CodegenGenerators };
 use HHPack\Codegen\HackUnit\{ TestClassGenerator };
 use HHPack\Codegen\Project\{ PackageClassGenerator };
-
-function generate_namespace_of(string $name, string $path) : OutputNamespace {
-  return new OutputNamespace($name, $path);
-}
-
-function library(ClassFileGenerator $generator) : Pair<GenerateType, ClassFileGenerator> {
-  return Pair { GenerateType::LibraryClass, $generator };
-}
-
-function library_test(ClassFileGenerator $generator) : Pair<GenerateType, ClassFileGenerator> {
-  return Pair { GenerateType::TestClass, $generator };
-}
+use function HHPack\Codegen\Cli\{ generate_namespace_of, library, library_test };
 
 final class Generators implements CodegenGenerators {
   public function generators(): Iterator<Pair<GenerateType, ClassFileGenerator>> {
