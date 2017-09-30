@@ -1,0 +1,34 @@
+{
+  "name": "hhpack/codegen",
+  "type": "library",
+  "keywords": [ "hack", "hhvm", "package", "generator" ],
+  "description": "Library code generator for Hack",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Noritaka Horio",
+      "email": "holy.shared.design@gmail.com"
+    }
+  ],
+  "bin": [
+    "bin/codegen"
+  ],
+  "require": {
+    "hhvm": ">=3.21.0",
+    "facebook/hhvm-autoload": "^1.5",
+    "facebook/hack-codegen": "^2.2"
+  },
+  "require-dev": {
+    "hackpack/hackunit": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "HHPack\\Codegen\\": "src"
+    }
+  },
+  "minimum-stability": "stable",
+  "scripts": {
+    "test": "vendor/bin/hackunit test",
+    "check:init": "touch .hhconfig"
+  }
+}
