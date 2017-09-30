@@ -12,7 +12,7 @@ use Facebook\HackCodegen\{
   CodegenClass,
   CodegenMethod
 };
-use HHPack\Codegen\Cli\{ Codegen };
+use HHPack\Codegen\Cli\{Codegen};
 
 $autoloadFiles = [
   __DIR__.'/../vendor/hh_autoload.php',

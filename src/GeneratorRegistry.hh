@@ -15,7 +15,7 @@ final class GeneratorRegistry {
   private ImmMap<GenerateType, ClassFileGenerator> $registry;
 
   public function __construct(
-    Traversable<Pair<GenerateType, ClassFileGenerator>> $generators
+    Traversable<Pair<GenerateType, ClassFileGenerator>> $generators,
   ) {
     $this->registry = ImmMap::fromItems($generators);
   }
