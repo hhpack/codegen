@@ -17,12 +17,12 @@ In the configuration file, you define the namespace and generator linkage.
 
 namespace MyPackage\Generators;
 
-use HHPack\Codegen\Cli\{ CodegenGenerators };
+use HHPack\Codegen\Cli\{ GeneratorProvider };
 use HHPack\Codegen\HackUnit\{ TestClassGenerator };
 use HHPack\Codegen\Project\{ PackageClassGenerator };
 use function HHPack\Codegen\Cli\{ namespace_of, library, library_test };
 
-final class Generators implements CodegenGenerators {
+final class Generators implements GeneratorProvider {
 
   // Your package namespace
   const string PACKAGE_NAMESPACE = 'MyPackage';

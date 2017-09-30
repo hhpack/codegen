@@ -13,7 +13,7 @@ namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{GenerateType, ClassFileGenerator};
 
-interface CodegenGenerators {
+interface GeneratorProvider {
   public function generators(
   ): Iterator<Pair<GenerateType, ClassFileGenerator>>;
 }

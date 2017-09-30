@@ -17,7 +17,8 @@
     "hhvm": ">=3.21.0",
     "hhvm/hhvm-autoload": "^1.5",
     "facebook/hack-codegen": "^2.2",
-    "hhpack/getopt": "^1.4.0"
+    "hhpack/getopt": "^1.4.0",
+    "facebook/definition-finder": "^1.6"
   },
   "require-dev": {
     "hackpack/hackunit": "^1.1"
