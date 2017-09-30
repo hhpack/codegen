@@ -1,4 +1,6 @@
 test/ export-ignore
+example/ export-ignore
+tmp/ export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
 .hhconfig export-ignore
