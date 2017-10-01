@@ -22,6 +22,8 @@ use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use function HHPack\Getopt\{optparser, take_on, on};
 use HHPack\Getopt\Parser\{OptionParser};
+use HHPack\Codegen\Cli\{CodegenGenerators};
+use Facebook\DefinitionFinder\{TreeParser};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
   HackCodegenConfig,
@@ -78,7 +80,7 @@ final class Codegen {
   private function generateBy(
     Pair<GenerateType, string> $generateClass,
   ): void {
-    $generators = $this->loadGeneratorProvider()->generators();
+    $generators = (new DevGeneratorProvider(dev_roots()))->generators();
 
     $generator = LibraryFileGenerator::fromItems($generators);
     $classFile = $generator->generate($generateClass);
@@ -100,13 +102,6 @@ final class Codegen {
         sprintf("File %s is already exists\n", $classFile->getFileName()),
       );
     }
-  }
-
-  private function loadGeneratorProvider(): CodegenGenerators {
-    $ref = new \ReflectionClass(
-      (string) \HHPack\Codegen\Example\Generators::class,
-    );
-    return $generatorProvider = $ref->newInstance();
   }
 
   private function displayVersion(): void {
