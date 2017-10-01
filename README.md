@@ -17,6 +17,7 @@ In the configuration file, you define the namespace and generator linkage.
 
 namespace MyPackage\Generators;
 
+use HHPack\Codegen\{ GenerateType, ClassFileGenerator };
 use HHPack\Codegen\Cli\{ GeneratorProvider };
 use HHPack\Codegen\HackUnit\{ TestClassGenerator };
 use HHPack\Codegen\Project\{ PackageClassGenerator };
