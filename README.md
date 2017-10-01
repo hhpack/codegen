@@ -42,6 +42,18 @@ final class Generators implements GeneratorProvider {
 }
 ```
 
+### Append autoload settings to hh_autoload.json
+
+Set the path to read the generator in **devRoots**.  
+Please refer to [hhvm-autoload](https://github.com/hhvm/hhvm-autoload/blob/master/composer.json) for hh_autoload.json.
+
+```json
+{
+  "roots": "src",
+  "devRoots": "/path/to/"
+}
+```
+
 ### Generate class file for package
 
 On the command line, specify **lib** and enter the class name.  
@@ -58,4 +70,13 @@ Then it creates a file **LibClassTest** in the **test** directory.
 
 ```shell
 bin/codegen test LibClassTest
+```
+
+## Run the test
+
+The test can be executed with the following command.
+
+```shell
+composer update
+composer test
 ```
