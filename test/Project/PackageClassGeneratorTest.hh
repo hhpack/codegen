@@ -16,7 +16,7 @@ final class PackageClassGeneratorTest {
   public function __construct(
     private PackageClassGenerator $generator,
     private HackCodegenConfig $config,
-    private string $tempDirectory
+    private string $tempDirectory,
   ) {}
 
   <<SuiteProvider('Factory')>>

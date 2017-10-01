@@ -17,7 +17,8 @@ final class LibraryFileGeneratorTest {
 
   public function __construct(
     private LibraryFileGenerator $generator,
-    private string $tempDirectory) {}
+    private string $tempDirectory,
+  ) {}
 
   <<SuiteProvider('Factory')>>
   public static function generatorFactory(): this {

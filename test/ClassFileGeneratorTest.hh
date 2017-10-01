@@ -14,7 +14,7 @@ final class ClassFileGeneratorTest {
   public function __construct(
     private ClassFileGenerator $generator,
     private OutputNamespace $namespace,
-    private string $tempDirectory
+    private string $tempDirectory,
   ) {}
 
   <<SuiteProvider('Factory')>>
@@ -24,8 +24,11 @@ final class ClassFileGeneratorTest {
     $config = new HackCodegenConfig($namespace->path());
     $generator = new TestClassGenerator(new HackCodegenFactory($config));
 
-    return
-      new self(new ClassFileGenerator($namespace, $generator), $namespace, $tempDirectory);
+    return new self(
+      new ClassFileGenerator($namespace, $generator),
+      $namespace,
+      $tempDirectory,
+    );
   }
 
   <<Setup('Factory')>>

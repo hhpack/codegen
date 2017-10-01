@@ -3,16 +3,12 @@
 namespace HHPack\Codegen\Example;
 
 use HHPack\Codegen\{OutputNamespace, GenerateType, ClassFileGenerator};
-use HHPack\Codegen\Cli\{CodegenGenerators};
+use HHPack\Codegen\Cli\{GeneratorProvider};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use HHPack\Codegen\Project\{PackageClassGenerator};
-use function HHPack\Codegen\Cli\{
-  namespace_of,
-  library,
-  library_test
-};
+use function HHPack\Codegen\Cli\{namespace_of, library, library_test};
 
-final class Generators implements CodegenGenerators {
+final class Generators implements GeneratorProvider {
   public function generators(
   ): Iterator<Pair<GenerateType, ClassFileGenerator>> {
     yield library(

@@ -17,12 +17,12 @@ In the configuration file, you define the namespace and generator linkage.
 
 namespace MyPackage\Generators;
 
-use HHPack\Codegen\Cli\{ CodegenGenerators };
+use HHPack\Codegen\Cli\{ GeneratorProvider };
 use HHPack\Codegen\HackUnit\{ TestClassGenerator };
 use HHPack\Codegen\Project\{ PackageClassGenerator };
 use function HHPack\Codegen\Cli\{ namespace_of, library, library_test };
 
-final class Generators implements CodegenGenerators {
+final class Generators implements GeneratorProvider {
 
   // Your package namespace
   const string PACKAGE_NAMESPACE = 'MyPackage';
@@ -42,6 +42,18 @@ final class Generators implements CodegenGenerators {
 }
 ```
 
+### Append autoload settings to hh_autoload.json
+
+Set the path to read the generator in **devRoots**.  
+Please refer to [hhvm-autoload](https://github.com/hhvm/hhvm-autoload/blob/master/composer.json) for hh_autoload.json.
+
+```json
+{
+  "roots": "src",
+  "devRoots": "/path/to/"
+}
+```
+
 ### Generate class file for package
 
 On the command line, specify **lib** and enter the class name.  
@@ -58,4 +70,13 @@ Then it creates a file **LibClassTest** in the **test** directory.
 
 ```shell
 bin/codegen test LibClassTest
+```
+
+## Run the test
+
+The test can be executed with the following command.
+
+```shell
+composer update
+composer test
 ```
