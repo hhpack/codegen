@@ -32,7 +32,7 @@ use Facebook\HackCodegen\{
 
 final class Codegen {
   const string PROGRAM_NAME = 'codegen';
-  const string PROGRAM_VERSION = '0.1.0';
+  const string PROGRAM_VERSION = '0.1.1';
 
   private bool $help = false;
   private bool $version = false;
