@@ -15,8 +15,9 @@
   ],
   "require": {
     "hhvm": ">=3.21.0",
-    "facebook/hhvm-autoload": "^1.5",
-    "facebook/hack-codegen": "^2.2"
+    "hhvm/hhvm-autoload": "^1.5",
+    "facebook/hack-codegen": "^2.2",
+    "hhpack/getopt": "^1.4.0"
   },
   "require-dev": {
     "hackpack/hackunit": "^1.1"

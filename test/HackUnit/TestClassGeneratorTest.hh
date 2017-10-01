@@ -16,18 +16,20 @@ final class TestClassGeneratorTest {
   public function __construct(
     private TestClassGenerator $generator,
     private HackCodegenConfig $config,
+    private string $tempDirectory
   ) {}
 
   <<SuiteProvider('Factory')>>
   public static function generatorFactory(): this {
-    $config = new HackCodegenConfig(getcwd().'/tmp');
+    $tempDirectory = sys_get_temp_dir();
+    $config = new HackCodegenConfig($tempDirectory);
     $generator = new TestClassGenerator(new HackCodegenFactory($config));
-    return new self($generator, $config);
+    return new self($generator, $config, $tempDirectory);
   }
 
   <<Setup('Factory')>>
   public function removeClassFile(): void {
-    $file = getcwd().'/tmp/'.static::CF;
+    $file = sprintf("%s/%s", $this->tempDirectory, static::CF);
 
     if (!file_exists($file)) {
       return;
@@ -42,7 +44,9 @@ final class TestClassGeneratorTest {
 
     $this->generator->generate($class)->save();
 
-    $assert->bool(file_exists(getcwd().'/tmp/'.static::CF))->is(true);
+    $file = sprintf("%s/%s", $this->tempDirectory, static::CF);
+
+    $assert->bool(file_exists($file))->is(true);
   }
 
 }

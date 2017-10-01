@@ -12,9 +12,7 @@ use Facebook\HackCodegen\{
   CodegenClass,
   CodegenMethod
 };
-use HHPack\Codegen\HackUnit\TestClassGenerator;
-use HHPack\Codegen\HHGenerator;
-use HHPack\Codegen\OutputNamespace;
+use HHPack\Codegen\Cli\{Codegen};
 
 $autoloadFiles = [
   __DIR__.'/../vendor/hh_autoload.php',
@@ -45,12 +43,7 @@ if (!$composerInstall) {
 
 unset($composerInstall, $autoloadFiles, $autoloadFile);
 
-function main(): void {
-  $a = new HHGenerator(
-    new Configuration(
-      new OutputNamespace('HHPack\Codegen', getcwd().'/src'),
-    ),
-  );
-  $a->generateTestFile('A')->save();
+function main(Traversable<string> $argv): void {
+  (new Codegen())->run($argv);
 }
-main();
+main($argv);

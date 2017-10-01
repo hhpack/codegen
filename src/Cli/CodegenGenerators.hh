@@ -9,9 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Cli;
 
-enum GenerateType : string {
-  LibraryClass = "lib";
-  TestClass = "test";
+use HHPack\Codegen\{GenerateType, ClassFileGenerator};
+
+interface CodegenGenerators {
+  public function generators(
+  ): Iterator<Pair<GenerateType, ClassFileGenerator>>;
 }
