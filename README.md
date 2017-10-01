@@ -61,7 +61,7 @@ On the command line, specify **lib** and enter the class name.
 Then it creates a file **LibClass** in the **src** directory.  
 
 ```shell
-bin/codegen lib LibClass
+vendor/bin/codegen lib LibClass
 ```
 
 ### Generate test class file for package
@@ -70,7 +70,7 @@ On the command line, specify **test** and enter the class name.
 Then it creates a file **LibClassTest** in the **test** directory.  
 
 ```shell
-bin/codegen test LibClassTest
+vendor/bin/codegen test LibClassTest
 ```
 
 ## Run the test
