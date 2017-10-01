@@ -29,12 +29,12 @@ final class Generators implements GeneratorProvider {
   const string PACKAGE_TEST_NAMESPACE = 'MyPackage\Test';
 
   public function generators(): Iterator<Pair<GenerateType, ClassFileGenerator>> {
-	// Link package namespace to generator
+    // Link package namespace to generator
     yield library(
       namespace_of(static::PACKAGE_NAMESPACE, 'src')
         ->map(PackageClassGenerator::class));
 
-	// Link package test namespace to generator
+    // Link package test namespace to generator
     yield library_test(
       namespace_of(static::PACKAGE_TEST_NAMESPACE, 'test')
         ->map(TestClassGenerator::class));
