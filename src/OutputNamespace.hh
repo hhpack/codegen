@@ -11,6 +11,7 @@
 
 namespace HHPack\Codegen;
 
+use HH\Lib\{Str, Vec, C};
 use Facebook\HackCodegen\{HackCodegenConfig, HackCodegenFactory};
 
 final class OutputNamespace {
@@ -45,9 +46,12 @@ final class OutputNamespace {
   }
 
   public function classNameOf(string $name): OutputClassName {
-    $names = explode('\\', $name);
-    $className = array_pop($names);
-    $subNamespace = implode('\\', $names);
+    $parts = Str\split($name, '\\');
+    $className = C\lastx($parts);
+    $subNamespace =
+      $parts
+        |> Vec\slice($$, 0, count($$) - 1)
+        |> Str\join($$, '\\');
 
     $namespace = $this->belongsNamespace($subNamespace);
 

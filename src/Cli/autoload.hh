@@ -11,6 +11,8 @@
 
 namespace HHPack\Codegen\Cli;
 
+use HH\Lib\{Str};
+
 type HHAutoloadConfig = shape(
   'roots' => Traversable<string>,
   'devRoots' => Traversable<string>,
@@ -29,14 +31,18 @@ function dev_roots(): ImmSet<string> {
  * Return the normalize path
  */
 function normalize_path(string $path): string {
-  if (strpos($path, '/') === 0) {
-    $path = substr($path, 0, 1);
+  $position = Str\search($path, '/');
+
+  if ($position !== null) {
+    $path = Str\slice($path, 0, 1);
   }
 
-  $lastIndex = strlen($path) - 1;
+  $lastIndex = Str\length($path) - 1;
 
-  if (strpos($path, '/') === $lastIndex) {
-    $path = substr($path, 0, $lastIndex);
+  $position = Str\search($path, '/');
+
+  if ($position === $lastIndex) {
+    $path = Str\slice($path, 0, $lastIndex);
   }
 
   return $path;
