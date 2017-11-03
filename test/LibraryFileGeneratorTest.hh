@@ -9,7 +9,7 @@ use HHPack\Codegen\{
   OutputNamespace
 };
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
-use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig};
+use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig, CodegenFileResult};
 use HackPack\HackUnit\Contract\Assert;
 
 final class LibraryFileGeneratorTest {
@@ -36,7 +36,7 @@ final class LibraryFileGeneratorTest {
     return new self($libraryGenerator, $tempDirectory);
   }
 
-  <<Setup('Factory')>>
+  <<Setup('test')>>
   public function removeClassFile(): void {
     $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
 
@@ -52,9 +52,10 @@ final class LibraryFileGeneratorTest {
       GenerateType::TestClass,
       static::GENERATE_CLASS_NAME,
     };
-    $this->generator->generate($newTestClass)->save();
+    $result = $this->generator->generate($newTestClass)->save();
 
     $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
+    $assert->bool($result === CodegenFileResult::CREATE)->is(true);
     $assert->bool(file_exists($file))->is(true);
   }
 

@@ -4,7 +4,7 @@ namespace HHPack\Codegen\Test\HackUnit;
 
 use HHPack\Codegen\{GenerateClass, OutputClassName};
 use HHPack\Codegen\Project\{PackageClassGenerator};
-use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig};
+use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig, CodegenFileResult};
 use HackPack\HackUnit\Contract\Assert;
 
 final class PackageClassGeneratorTest {
@@ -27,7 +27,7 @@ final class PackageClassGeneratorTest {
     return new self($generator, $config, $tempDirectory);
   }
 
-  <<Setup('Factory')>>
+  <<Setup('test')>>
   public function removeClassFile(): void {
     $file = sprintf("%s/%s", $this->tempDirectory, static::CF);
 
@@ -42,10 +42,11 @@ final class PackageClassGeneratorTest {
     $className = new OutputClassName(static::NS, static::CN);
     $class = new GenerateClass($className, static::CF);
 
-    $this->generator->generate($class)->save();
+    $result = $this->generator->generate($class)->save();
 
     $file = sprintf("%s/%s", $this->tempDirectory, static::CF);
 
+    $assert->bool($result === CodegenFileResult::CREATE)->is(true);
     $assert->bool(file_exists($file))->is(true);
   }
 
