@@ -4,7 +4,11 @@ namespace HHPack\Codegen\Test\HackUnit;
 
 use HHPack\Codegen\{GenerateClass, OutputClassName};
 use HHPack\Codegen\Project\{PackageClassGenerator};
-use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig, CodegenFileResult};
+use Facebook\HackCodegen\{
+  HackCodegenFactory,
+  HackCodegenConfig,
+  CodegenFileResult
+};
 use HackPack\HackUnit\Contract\Assert;
 
 final class PackageClassGeneratorTest {

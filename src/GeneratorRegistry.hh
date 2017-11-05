@@ -12,15 +12,15 @@
 namespace HHPack\Codegen;
 
 final class GeneratorRegistry {
-  private ImmMap<GenerateType, ClassFileGenerator> $registry;
+  private ImmMap<GenerateType, FileGeneratable<string>> $registry;
 
   public function __construct(
-    Traversable<Pair<GenerateType, ClassFileGenerator>> $generators,
+    Traversable<Pair<GenerateType, FileGeneratable<string>>> $generators,
   ) {
     $this->registry = ImmMap::fromItems($generators);
   }
 
-  public function get(GenerateType $type): ClassFileGenerator {
+  public function get(GenerateType $type): FileGeneratable<string> {
     return $this->registry->at($type);
   }
 }

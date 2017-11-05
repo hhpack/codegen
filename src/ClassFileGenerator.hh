@@ -14,7 +14,6 @@ namespace HHPack\Codegen;
 use Facebook\HackCodegen\{CodegenFile};
 
 final class ClassFileGenerator implements FileGeneratable<string> {
-
   public function __construct(
     private OutputNamespace $namespace,
     private ClassFileGeneratable $generator,
@@ -28,5 +27,4 @@ final class ClassFileGenerator implements FileGeneratable<string> {
 
     return $this->generator->generate($newClass);
   }
-
 }

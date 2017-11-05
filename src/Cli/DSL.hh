@@ -11,15 +11,25 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{OutputNamespace, GenerateType, ClassFileGenerator};
+use HHPack\Codegen\{
+  OutputNamespace,
+  GenerateType,
+  DefinedMetaData,
+  DefinedGenerator,
+  ClassFileGenerator
+};
+
+function define_generator(string $name, string $description): DefinedMetaData {
+  return new DefinedMetaData($name, $description);
+}
 
 function namespace_of(string $name, string $path): OutputNamespace {
   return new OutputNamespace($name, $path);
 }
 
 function map_to(
-  GenerateType $type,
+  DefinedMetaData $meta,
   ClassFileGenerator $generator,
-): Pair<GenerateType, ClassFileGenerator> {
-  return Pair {$type, $generator};
+): Pair<GenerateType, DefinedGenerator> {
+  return Pair {$meta->name(), new DefinedGenerator($meta, $generator)};
 }

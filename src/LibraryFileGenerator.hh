@@ -17,16 +17,14 @@ final class LibraryFileGenerator
   implements FileGeneratable<Pair<GenerateType, string>> {
   public function __construct(private GeneratorRegistry $registry) {}
 
-  public function generate(
-    Pair<GenerateType, string> $target,
-  ): CodegenFile {
+  public function generate(Pair<GenerateType, string> $target): CodegenFile {
     list($type, $name) = $target;
     $generator = $this->registry->get($type);
     return $generator->generate($name);
   }
 
   public static function fromItems(
-    Traversable<Pair<GenerateType, ClassFileGenerator>> $generators,
+    Traversable<Pair<GenerateType, FileGeneratable<string>>> $generators,
   ): this {
     return new self(new GeneratorRegistry($generators));
   }

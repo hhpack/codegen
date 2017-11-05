@@ -75,9 +75,9 @@ final class Codegen {
     } else {
       $type = $remainArgs->at(0);
       $name = $remainArgs->at(1);
-      $genType = GenerateType::assert($type);
+      //      $genType = GenerateType::assert($type);
 
-      $this->generateBy(Pair {$genType, $name});
+      $this->generateBy(Pair {$type, $name});
     }
   }
 
@@ -105,7 +105,9 @@ final class Codegen {
     }
   }
 
-  private function generateFile(Pair<GenerateType, string> $generateClass): CodegenFile {
+  private function generateFile(
+    Pair<GenerateType, string> $generateClass,
+  ): CodegenFile {
     $generators = $this->provider->generators();
 
     $generator = LibraryFileGenerator::fromItems($generators);
