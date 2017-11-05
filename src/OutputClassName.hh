@@ -11,7 +11,7 @@
 
 namespace HHPack\Codegen;
 
-use HH\Lib\{Str, Vec};
+use HH\Lib\{Str, Vec, C};
 
 final class OutputClassName {
 
@@ -48,4 +48,16 @@ final class OutputClassName {
     return $path.'.hh';
   }
 
+  public static function fromString(string $name) : this {
+    $parts = Str\split($name, '\\');
+
+    if (C\count($parts) <= 1) {
+      $namespace = '';
+    } else {
+      $namespace = Vec\slice($parts, 0, C\count($parts) - 1)
+        |> Str\join($$, '\\');
+    }
+    $className = C\lastx($parts);
+    return new self($namespace, $className);
+  }
 }
