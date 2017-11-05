@@ -27,6 +27,7 @@ use Facebook\DefinitionFinder\{TreeParser};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
   HackCodegenConfig,
+  CodegenFile,
   CodegenFileResult
 };
 
@@ -37,6 +38,7 @@ final class Codegen {
   private bool $help = false;
   private bool $version = false;
   private OptionParser $optionParser;
+  private GeneratorProvider $provider;
 
   public function __construct() {
     $this->optionParser = optparser(
@@ -57,6 +59,8 @@ final class Codegen {
         ),
       ],
     );
+
+    $this->provider = new DevGeneratorProvider(dev_roots());
   }
 
   public function run(Traversable<string> $argv): void {
@@ -80,10 +84,7 @@ final class Codegen {
   private function generateBy(
     Pair<GenerateType, string> $generateClass,
   ): void {
-    $generators = (new DevGeneratorProvider(dev_roots()))->generators();
-
-    $generator = LibraryFileGenerator::fromItems($generators);
-    $classFile = $generator->generate($generateClass);
+    $classFile = $this->generateFile($generateClass);
     $result = $classFile->save();
 
     if ($result === CodegenFileResult::CREATE) {
@@ -102,6 +103,13 @@ final class Codegen {
         sprintf("File %s is already exists\n", $classFile->getFileName()),
       );
     }
+  }
+
+  private function generateFile(Pair<GenerateType, string> $generateClass): CodegenFile {
+    $generators = $this->provider->generators();
+
+    $generator = LibraryFileGenerator::fromItems($generators);
+    return $generator->generate($generateClass);
   }
 
   private function displayVersion(): void {
