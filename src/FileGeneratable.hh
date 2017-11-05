@@ -14,5 +14,5 @@ namespace HHPack\Codegen;
 use Facebook\HackCodegen\{CodegenFile};
 
 interface FileGeneratable<T> {
-  public function generate(T $name): CodegenFile;
+  public function generate(T $target): CodegenFile;
 }

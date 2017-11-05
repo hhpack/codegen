@@ -18,9 +18,9 @@ final class LibraryFileGenerator
   public function __construct(private GeneratorRegistry $registry) {}
 
   public function generate(
-    Pair<GenerateType, string> $typeOfClass,
+    Pair<GenerateType, string> $target,
   ): CodegenFile {
-    list($type, $name) = $typeOfClass;
+    list($type, $name) = $target;
     $generator = $this->registry->get($type);
     return $generator->generate($name);
   }

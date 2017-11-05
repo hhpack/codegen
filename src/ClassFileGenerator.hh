@@ -13,7 +13,7 @@ namespace HHPack\Codegen;
 
 use Facebook\HackCodegen\{CodegenFile};
 
-final class ClassFileGenerator {
+final class ClassFileGenerator implements FileGeneratable<string> {
 
   public function __construct(
     private OutputNamespace $namespace,

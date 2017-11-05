@@ -27,14 +27,14 @@ final class TestClassGenerator implements ClassFileGeneratable {
     return new self($factory);
   }
 
-  public function generate(GenerateClass $class): CodegenFile {
+  public function generate(GenerateClass $target): CodegenFile {
     return
       $this->cg
-        ->codegenFile($class->fileName())
+        ->codegenFile($target->fileName())
         ->setIsStrict(true)
-        ->setNamespace($class->belongsNamespace())
+        ->setNamespace($target->belongsNamespace())
         ->useNamespace('HackPack\HackUnit\Contract\Assert')
-        ->addClass($this->classOf($class->name()));
+        ->addClass($this->classOf($target->name()));
   }
 
   private function classOf(string $className): CodegenClass {

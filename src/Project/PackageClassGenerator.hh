@@ -22,13 +22,13 @@ final class PackageClassGenerator implements ClassFileGeneratable {
     return new self($factory);
   }
 
-  public function generate(GenerateClass $class): CodegenFile {
+  public function generate(GenerateClass $target): CodegenFile {
     return
       $this->cg
-        ->codegenFile($class->fileName())
+        ->codegenFile($target->fileName())
         ->setIsStrict(true)
-        ->setNamespace($class->belongsNamespace())
-        ->addClass($this->classOf($class->name()));
+        ->setNamespace($target->belongsNamespace())
+        ->addClass($this->classOf($target->name()));
   }
 
   private function classOf(string $className): CodegenClass {
