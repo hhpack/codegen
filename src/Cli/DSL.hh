@@ -17,14 +17,9 @@ function namespace_of(string $name, string $path): OutputNamespace {
   return new OutputNamespace($name, $path);
 }
 
-function library(
+function map_to(
+  GenerateType $type,
   ClassFileGenerator $generator,
 ): Pair<GenerateType, ClassFileGenerator> {
-  return Pair {GenerateType::LibraryClass, $generator};
-}
-
-function library_test(
-  ClassFileGenerator $generator,
-): Pair<GenerateType, ClassFileGenerator> {
-  return Pair {GenerateType::TestClass, $generator};
+  return Pair {$type, $generator};
 }
