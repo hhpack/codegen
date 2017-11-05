@@ -16,7 +16,8 @@ use HHPack\Codegen\{
   ClassFileGenerator,
   GenerateType,
   ClassFileGeneratable,
-  OutputNamespace
+  OutputNamespace,
+  ClassName
 };
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
@@ -75,14 +76,13 @@ final class Codegen {
     } else {
       $type = $remainArgs->at(0);
       $name = $remainArgs->at(1);
-      //      $genType = GenerateType::assert($type);
 
       $this->generateBy(Pair {$type, $name});
     }
   }
 
   private function generateBy(
-    Pair<GenerateType, string> $generateClass,
+    Pair<GenerateType, ClassName> $generateClass,
   ): void {
     $classFile = $this->generateFile($generateClass);
     $result = $classFile->save();
@@ -106,7 +106,7 @@ final class Codegen {
   }
 
   private function generateFile(
-    Pair<GenerateType, string> $generateClass,
+    Pair<GenerateType, ClassName> $generateClass,
   ): CodegenFile {
     $generators = $this->provider->generators();
 

@@ -12,3 +12,7 @@
 namespace HHPack\Codegen;
 
 type GenerateType = string;
+
+type ClassName = string;
+
+type PackageClassFileGeneratable = FileGeneratable<ClassName>;

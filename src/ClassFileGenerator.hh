@@ -13,13 +13,13 @@ namespace HHPack\Codegen;
 
 use Facebook\HackCodegen\{CodegenFile};
 
-final class ClassFileGenerator implements FileGeneratable<string> {
+final class ClassFileGenerator implements FileGeneratable<ClassName> {
   public function __construct(
     private OutputNamespace $namespace,
     private ClassFileGeneratable $generator,
   ) {}
 
-  public function generate(string $name): CodegenFile {
+  public function generate(ClassName $name): CodegenFile {
     $className = $this->namespace->classNameOf($name);
     $relativeFilePath = $this->namespace->relativeClassFilePath($className);
 

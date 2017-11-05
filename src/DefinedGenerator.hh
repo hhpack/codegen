@@ -13,11 +13,11 @@ namespace HHPack\Codegen;
 
 use Facebook\HackCodegen\{CodegenFile};
 
-final class DefinedGenerator implements FileGeneratable<string> {
+final class DefinedGenerator implements FileGeneratable<ClassName> {
 
   public function __construct(
     private DefinedMetaData $meta,
-    private FileGeneratable<string> $generator,
+    private FileGeneratable<ClassName> $generator,
   ) {}
 
   public function name(): string {
@@ -28,7 +28,7 @@ final class DefinedGenerator implements FileGeneratable<string> {
     return $this->meta->description();
   }
 
-  public function generate(string $name): CodegenFile {
+  public function generate(ClassName $name): CodegenFile {
     return $this->generator->generate($name);
   }
 }
