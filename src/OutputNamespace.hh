@@ -77,6 +77,11 @@ final class OutputNamespace {
     return new OutputClassName($namespace, $className);
   }
 
+  public function resolveClassNameOf(OutputClassName $className): OutputClassName {
+    $namespace = $this->belongsNamespace($className->namespace());
+    return new OutputClassName($namespace, $className->name());
+  }
+
   public function map<Tu as ClassFileGeneratable>(
     classname<Tu> $className,
   ): ClassFileGenerator {
