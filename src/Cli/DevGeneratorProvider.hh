@@ -13,6 +13,7 @@ namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{GenerateType, PackageClassFileGeneratable};
 use Facebook\DefinitionFinder\{TreeParser, ScannedClass};
+use HH\Lib\{Vec,C};
 
 final class DevGeneratorProvider implements GeneratorProvider {
 
@@ -46,18 +47,20 @@ final class DevGeneratorProvider implements GeneratorProvider {
 
   private function findGeneratorByPath(string $path): ImmSet<string> {
     $parser = TreeParser::FromPath(getcwd().'/'.$path);
-    return
-      $parser->getClasses()
-        ->filter(($class) ==> $this->isImplementProvider($class))
-        ->map(($class) ==> $class->getName())
-        ->toImmSet();
+
+    $classNames = $parser->getClasses()
+      |> Vec\filter($$, ($class) ==> $this->isImplementProvider($class))
+      |> Vec\map($$, ($class) ==> $class->getName());
+
+    return ImmSet::fromItems($classNames);
   }
 
   private function isImplementProvider(ScannedClass $class): bool {
-    $implementInterface = ($interface) ==> $interface ===
-    GeneratorProvider::class;
+    $implementInterface = ($interface) ==> $interface === GeneratorProvider::class;
+
     $interfaces = $class->getInterfaceNames();
-    $macthedInterfaces = $interfaces->filter($implementInterface);
-    return $macthedInterfaces->count() > 0;
+    $macthedInterfaces = $interfaces |> Vec\filter($$, $implementInterface);
+
+    return C\count($macthedInterfaces) > 0;
   }
 }

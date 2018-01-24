@@ -85,7 +85,7 @@ final class OutputNamespace {
   public function map<Tu as ClassFileGeneratable>(
     classname<Tu> $className,
   ): ClassFileGenerator {
-    $config = new HackCodegenConfig($this->mappedPath);
+    $config = (new HackCodegenConfig())->withRootDir($this->mappedPath);
     $factory = new HackCodegenFactory($config);
     return new ClassFileGenerator($this, $className::from($factory));
   }
@@ -94,7 +94,7 @@ final class OutputNamespace {
   public function createGenerator<Tu as ClassFileGeneratable>(
     classname<Tu> $className,
   ): ClassFileGenerator {
-    $config = new HackCodegenConfig($this->mappedPath);
+    $config = (new HackCodegenConfig())->withRootDir($this->mappedPath);
     $factory = new HackCodegenFactory($config);
     return new ClassFileGenerator($this, $className::from($factory));
   }

@@ -26,7 +26,6 @@ final class PackageClassGenerator implements ClassFileGeneratable {
     return
       $this->cg
         ->codegenFile($target->fileName())
-        ->setIsStrict(true)
         ->setNamespace($target->belongsNamespace())
         ->addClass($this->classOf($target->name()));
   }

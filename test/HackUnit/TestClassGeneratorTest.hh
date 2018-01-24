@@ -26,7 +26,7 @@ final class TestClassGeneratorTest {
   <<SuiteProvider('Factory')>>
   public static function generatorFactory(): this {
     $tempDirectory = sys_get_temp_dir();
-    $config = new HackCodegenConfig($tempDirectory);
+    $config = (new HackCodegenConfig())->withRootDir($tempDirectory);
     $generator = new TestClassGenerator(new HackCodegenFactory($config));
     return new self($generator, $config, $tempDirectory);
   }

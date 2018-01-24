@@ -31,7 +31,6 @@ final class TestClassGenerator implements ClassFileGeneratable {
     return
       $this->cg
         ->codegenFile($target->fileName())
-        ->setIsStrict(true)
         ->setNamespace($target->belongsNamespace())
         ->useNamespace('HackPack\HackUnit\Contract\Assert')
         ->addClass($this->classOf($target->name()));
@@ -50,7 +49,7 @@ final class TestClassGenerator implements ClassFileGeneratable {
       $this->cg
         ->codegenMethod('exampleTest')
         ->setIsFinal(true)
-        ->setUserAttribute('Test')
+        ->addEmptyUserAttribute('Test')
         ->addParameter('Assert $assert')
         ->setReturnType('void')
         ->setBody('$assert->bool(true)->is(true);');
