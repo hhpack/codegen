@@ -38,7 +38,7 @@ final class HHAutoloadConfig {
     }
 
     $autoloadJson = file_get_contents($jsonPath);
-    $json = json_decode($autoloadJson, true, 512, JSON_FB_COLLECTIONS);
+    $json = json_decode($autoloadJson, true, 512, JSON_FB_HACK_ARRAYS);
     $validJson = matches_type_structure(type_structure(self::class, 'T'), $json);
 
     if (!Shapes::keyExists($validJson, 'devRoots')) {
