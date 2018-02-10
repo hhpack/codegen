@@ -11,7 +11,7 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{GenerateType, PackageClassFileGeneratable};
+use HHPack\Codegen\{GeneratorName, PackageClassFileGeneratable};
 use Facebook\DefinitionFinder\{TreeParser, ScannedClass};
 use HH\Lib\{Vec, C};
 
@@ -20,7 +20,7 @@ final class DevGeneratorProvider implements GeneratorProvider {
   public function __construct(private Traversable<string> $paths) {}
 
   public function generators(
-  ): Iterator<Pair<GenerateType, PackageClassFileGeneratable>> {
+  ): Iterator<Pair<GeneratorName, PackageClassFileGeneratable>> {
     $generator = $this->loadFromPath($this->paths)->firstValue();
 
     if (is_null($generator)) {

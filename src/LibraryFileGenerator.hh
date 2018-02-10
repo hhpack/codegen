@@ -15,19 +15,19 @@ use Facebook\HackCodegen\{CodegenFile};
 use HHPack\Codegen\Contract\{FileGeneratable};
 
 final class LibraryFileGenerator
-  implements FileGeneratable<Pair<GenerateType, ClassName>> {
+  implements FileGeneratable<Pair<GeneratorName, ClassName>> {
   public function __construct(private GeneratorRegistry $registry) {}
 
   public function generate(
-    Pair<GenerateType, ClassName> $target,
+    Pair<GeneratorName, ClassName> $target,
   ): CodegenFile {
-    list($type, $name) = $target;
-    $generator = $this->registry->get($type);
+    list($alias, $name) = $target;
+    $generator = $this->registry->get($alias);
     return $generator->generate($name);
   }
 
   public static function fromItems(
-    Traversable<Pair<GenerateType, PackageClassFileGeneratable>> $generators,
+    Traversable<Pair<GeneratorName, PackageClassFileGeneratable>> $generators,
   ): this {
     return new self(new GeneratorRegistry($generators));
   }

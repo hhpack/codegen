@@ -17,7 +17,7 @@ final class GeneratorMapper {
 
   public function mapTo(
     ClassFileGenerator $generator,
-  ): Pair<GenerateType, DefinedGenerator> {
+  ): Pair<GeneratorName, DefinedGenerator> {
     return Pair {
       $this->meta->name(),
       new DefinedGenerator($this->meta, $generator),

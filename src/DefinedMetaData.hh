@@ -13,11 +13,11 @@ namespace HHPack\Codegen;
 
 final class DefinedMetaData {
   public function __construct(
-    private string $name,
+    private GeneratorName $name,
     private string $description,
   ) {}
 
-  public function name(): string {
+  public function name(): GeneratorName {
     return $this->name;
   }
 

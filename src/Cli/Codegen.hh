@@ -14,7 +14,7 @@ namespace HHPack\Codegen\Cli;
 use HHPack\Codegen\{
   LibraryFileGenerator,
   ClassFileGenerator,
-  GenerateType,
+  GeneratorName,
   ClassFileGeneratable,
   OutputNamespace,
   ClassName
@@ -82,7 +82,7 @@ final class Codegen {
   }
 
   private function generateBy(
-    Pair<GenerateType, ClassName> $generateClass,
+    Pair<GeneratorName, ClassName> $generateClass,
   ): void {
     $classFile = $this->generateFile($generateClass);
     $result = $classFile->save();
@@ -106,7 +106,7 @@ final class Codegen {
   }
 
   private function generateFile(
-    Pair<GenerateType, ClassName> $generateClass,
+    Pair<GeneratorName, ClassName> $generateClass,
   ): CodegenFile {
     $generators = $this->provider->generators();
 
