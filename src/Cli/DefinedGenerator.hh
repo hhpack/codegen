@@ -9,8 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Cli;
 
+use HHPack\Codegen\{ClassName};
 use HHPack\Codegen\Contract\{FileGeneratable};
 use Facebook\HackCodegen\{CodegenFile};
 

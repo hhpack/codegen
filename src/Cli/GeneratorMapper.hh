@@ -9,7 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Cli;
+
+use HHPack\Codegen\{GeneratorName,ClassName,ClassFileGenerator};
 
 final class GeneratorMapper {
 
