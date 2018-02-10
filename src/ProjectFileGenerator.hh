@@ -14,7 +14,7 @@ namespace HHPack\Codegen;
 use Facebook\HackCodegen\{CodegenFile};
 use HHPack\Codegen\Contract\{FileGeneratable};
 
-final class LibraryFileGenerator
+final class ProjectFileGenerator
   implements FileGeneratable<Pair<GeneratorName, ClassName>> {
   public function __construct(private GeneratorRegistry $registry) {}
 

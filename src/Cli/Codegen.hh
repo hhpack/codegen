@@ -12,7 +12,7 @@
 namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{
-  LibraryFileGenerator,
+  ProjectFileGenerator,
   GeneratorName,
   ClassName
 };
@@ -108,7 +108,7 @@ final class Codegen {
   ): CodegenFile {
     $generators = $this->provider->generators();
 
-    $generator = LibraryFileGenerator::fromItems($generators);
+    $generator = ProjectFileGenerator::fromItems($generators);
     return $generator->generate($generateClass);
   }
 
