@@ -11,7 +11,8 @@
 
 namespace HHPack\Codegen\Project;
 
-use HHPack\Codegen\{GenerateClass, ClassFileGeneratable};
+use HHPack\Codegen\{GenerateClass};
+use HHPack\Codegen\Contract\{ClassFileGeneratable};
 use Facebook\HackCodegen\{ICodegenFactory, CodegenFile, CodegenClass};
 
 final class PackageClassGenerator implements ClassFileGeneratable {

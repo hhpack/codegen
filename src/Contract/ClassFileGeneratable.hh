@@ -9,11 +9,22 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Contract;
 
+use HHPack\Codegen\{GenerateClass};
 use Facebook\HackCodegen\{ICodegenFactory, CodegenFile};
 
+/**
+ * An interface that can generate class files.
+ */
 interface ClassFileGeneratable extends FileGeneratable<GenerateClass> {
+  /**
+   * Generate a class file with the specification of the specified class.
+   */
   public function generate(GenerateClass $target): CodegenFile;
+
+  /**
+   * Generate an instance based on the factory of the generator.
+   */
   public static function from(ICodegenFactory $factory): this;
 }

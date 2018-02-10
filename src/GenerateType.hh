@@ -11,6 +11,8 @@
 
 namespace HHPack\Codegen;
 
+use HHPack\Codegen\Contract\{FileGeneratable};
+
 type GenerateType = string;
 
 type ClassName = string;
