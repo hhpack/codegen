@@ -2,11 +2,11 @@
 
 namespace HHPack\Codegen\Example;
 
-use HHPack\Codegen\{OutputNamespace, GeneratorName};
+use HHPack\Codegen\{GeneratorName};
 use HHPack\Codegen\Contract\{FileGeneratable, GeneratorProvider};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use HHPack\Codegen\Project\{PackageClassGenerator};
-use function HHPack\Codegen\Cli\{define_generator, namespace_of, map_to};
+use function HHPack\Codegen\Cli\{define_generator, namespace_of};
 
 final class Generators implements GeneratorProvider {
   const LIB = 'HHPack\\Codegen\\Example';
