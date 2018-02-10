@@ -11,9 +11,9 @@
 
 namespace HHPack\Codegen\Contract;
 
-use HHPack\Codegen\{GeneratorName};
+use HHPack\Codegen\{ClassName};
 
-interface GeneratorProvider {
-  public function generators(
-  ): Iterator<Pair<GeneratorName, NamedGenerator>>;
+interface NamedGenerator extends FileGeneratable<ClassName> {
+  public function name(): string;
+  public function description(): string;
 }

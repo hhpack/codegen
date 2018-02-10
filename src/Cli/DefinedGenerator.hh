@@ -12,10 +12,10 @@
 namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{ClassName};
-use HHPack\Codegen\Contract\{FileGeneratable};
+use HHPack\Codegen\Contract\{NamedGenerator,FileGeneratable};
 use Facebook\HackCodegen\{CodegenFile};
 
-final class DefinedGenerator implements FileGeneratable<ClassName> {
+final class DefinedGenerator implements NamedGenerator {
 
   public function __construct(
     private DefinedMetaData $meta,
