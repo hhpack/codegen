@@ -17,28 +17,36 @@ In the configuration file, you define the namespace and generator linkage.
 
 namespace MyPackage\Generators;
 
-use HHPack\Codegen\{ GenerateType, ClassFileGenerator };
-use HHPack\Codegen\Cli\{ GeneratorProvider };
-use HHPack\Codegen\HackUnit\{ TestClassGenerator };
-use HHPack\Codegen\Project\{ PackageClassGenerator };
-use function HHPack\Codegen\Cli\{ namespace_of, library, library_test };
+use HHPack\Codegen\{GeneratorName};
+use HHPack\Codegen\Contract\{FileGeneratable, GeneratorProvider};
+use HHPack\Codegen\HackUnit\{TestClassGenerator};
+use HHPack\Codegen\Project\{PackageClassGenerator};
+use function HHPack\Codegen\Cli\{define_generator, namespace_of};
 
 final class Generators implements GeneratorProvider {
+  const LIB = 'HHPack\\Codegen\\Example';
+  const LIB_TEST = 'HHPack\\Codegen\\Example\\Test';
 
-  // Your package namespace
-  const string PACKAGE_NAMESPACE = 'MyPackage';
-  const string PACKAGE_TEST_NAMESPACE = 'MyPackage\Test';
+  public function generators(
+  ): Iterator<Pair<GeneratorName, FileGeneratable<string>>> {
+  
+    /**
+     * vendor/bin/codegen lib:class LibClass
+     */
+    yield define_generator("lib:class", "generate library class file.")
+      ->mapTo(
+        namespace_of(static::LIB, 'example/src')
+          ->map(PackageClassGenerator::class),
+      );
 
-  public function generators(): Iterator<Pair<GenerateType, ClassFileGenerator>> {
-    // Link package namespace to generator
-    yield library(
-      namespace_of(static::PACKAGE_NAMESPACE, 'src')
-        ->map(PackageClassGenerator::class));
-
-    // Link package test namespace to generator
-    yield library_test(
-      namespace_of(static::PACKAGE_TEST_NAMESPACE, 'test')
-        ->map(TestClassGenerator::class));
+    /**
+     * vendor/bin/codegen lib:testclass LibClassTest
+     */
+    yield define_generator("lib:testclass", "generate test class file.")
+      ->mapTo(
+        namespace_of(static::LIB_TEST, 'example/test')
+          ->map(TestClassGenerator::class),
+      );
   }
 }
 ```
@@ -57,20 +65,53 @@ Please refer to [hhvm-autoload](https://github.com/hhvm/hhvm-autoload/blob/maste
 
 ### Generate class file for package
 
-On the command line, specify **lib** and enter the class name.  
-Then it creates a file **LibClass** in the **src** directory.  
+The name of the generator is specified as the first argument, and the class name is specified as the second argument.
 
 ```shell
-vendor/bin/codegen lib LibClass
+vendor/bin/codegen [GEN_NANE] LibClass
 ```
 
-### Generate test class file for package
+## Custom Generator
 
-On the command line, specify **test** and enter the class name.  
-Then it creates a file **LibClassTest** in the **test** directory.  
+If you want to use your own generator, implement **ClassFileGeneratable**.
 
-```shell
-vendor/bin/codegen test LibClassTest
+```hack
+use HHPack\Codegen\{GenerateClass};
+use HHPack\Codegen\Contract\{ClassFileGeneratable};
+use Facebook\HackCodegen\{ICodegenFactory, CodegenFile, CodegenClass};
+
+final class CustomClassGenerator implements ClassFileGeneratable {
+
+  public function __construct(private ICodegenFactory $cg) {}
+
+  public static function from(ICodegenFactory $factory): this {
+    return new self($factory);
+  }
+
+  public function generate(GenerateClass $target): CodegenFile {
+    return
+      $this->cg
+        ->codegenFile($target->fileName())
+        ->setNamespace($target->belongsNamespace())
+        ->addClass($this->classOf($target->name()));
+  }
+
+  private function classOf(string $className): CodegenClass {
+    return $this->cg->codegenClass($className)->setIsFinal(true);
+  }
+
+}
+```
+
+You only need to specify it in the generator definition.  
+In the example below, you can generate code with the command **vendor/bin/codegen myproject:loader MyLoader**.
+
+```
+yield define_generator("myproject:loader", "generate loader class file.")
+  ->mapTo(
+    namespace_of('MyProject\Loader', 'MyProject/Loader')
+      ->map(CustomClassGenerator::class) // Map generator to namespace
+    );
 ```
 
 ## Run the test
