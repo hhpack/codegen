@@ -12,6 +12,7 @@
 namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{GeneratorName, PackageClassFileGeneratable};
+use HHPack\Codegen\Contract\{GeneratorProvider};
 use Facebook\DefinitionFinder\{TreeParser, ScannedClass};
 use HH\Lib\{Vec, C};
 

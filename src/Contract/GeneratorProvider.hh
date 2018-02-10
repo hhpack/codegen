@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen\Cli;
+namespace HHPack\Codegen\Contract;
 
 use HHPack\Codegen\{GeneratorName, PackageClassFileGeneratable};
 

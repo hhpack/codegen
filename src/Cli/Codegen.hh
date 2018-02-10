@@ -13,12 +13,10 @@ namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{
   LibraryFileGenerator,
-  ClassFileGenerator,
   GeneratorName,
-  ClassFileGeneratable,
-  OutputNamespace,
   ClassName
 };
+use HHPack\Codegen\Contract\{GeneratorProvider};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use function HHPack\Getopt\{optparser, take_on, on};
