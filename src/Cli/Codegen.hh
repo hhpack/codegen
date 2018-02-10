@@ -55,7 +55,8 @@ final class Codegen {
       ],
     );
 
-    $this->provider = new DevGeneratorProvider(dev_roots());
+    $config = HHAutoloadConfig::fromWorkingDirectory();
+    $this->provider = new DevGeneratorProvider($config->devRoots());
   }
 
   public function run(Traversable<string> $argv): void {
