@@ -9,12 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Contract;
 
-use HHPack\Codegen\Contract\{FileGeneratable};
+use HHPack\Codegen\{GeneratorName, PackageClassFileGeneratable};
 
-type GenerateType = string;
-
-type ClassName = string;
-
-type PackageClassFileGeneratable = FileGeneratable<ClassName>;
+interface GeneratorProvider {
+  public function generators(
+  ): Iterator<Pair<GeneratorName, PackageClassFileGeneratable>>;
+}

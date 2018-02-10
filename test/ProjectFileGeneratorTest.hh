@@ -2,12 +2,7 @@
 
 namespace HHPack\Codegen\Test;
 
-use HHPack\Codegen\{
-  LibraryFileGenerator,
-  GenerateType,
-  ClassFileGenerator,
-  OutputNamespace
-};
+use HHPack\Codegen\{ProjectFileGenerator, OutputNamespace};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
@@ -16,11 +11,11 @@ use Facebook\HackCodegen\{
 };
 use HackPack\HackUnit\Contract\Assert;
 
-final class LibraryFileGeneratorTest {
+final class ProjectFileGeneratorTest {
   const string GENERATE_CLASS_NAME = 'Test\\Test1';
 
   public function __construct(
-    private LibraryFileGenerator $generator,
+    private ProjectFileGenerator $generator,
     private string $tempDirectory,
   ) {}
 
@@ -28,7 +23,7 @@ final class LibraryFileGeneratorTest {
   public static function generatorFactory(): this {
     $tempDirectory = sys_get_temp_dir();
     $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
-    $libraryGenerator = LibraryFileGenerator::fromItems(
+    $libraryGenerator = ProjectFileGenerator::fromItems(
       [Pair {"test", $namespace->map(TestClassGenerator::class)}],
     );
 

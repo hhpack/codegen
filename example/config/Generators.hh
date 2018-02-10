@@ -2,9 +2,8 @@
 
 namespace HHPack\Codegen\Example;
 
-use HHPack\Codegen\{OutputNamespace, GenerateType};
-use HHPack\Codegen\Contract\{FileGeneratable};
-use HHPack\Codegen\Cli\{GeneratorProvider};
+use HHPack\Codegen\{OutputNamespace, GeneratorName};
+use HHPack\Codegen\Contract\{FileGeneratable, GeneratorProvider};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use function HHPack\Codegen\Cli\{define_generator, namespace_of, map_to};
@@ -14,7 +13,7 @@ final class Generators implements GeneratorProvider {
   const LIB_TEST = 'HHPack\\Codegen\\Example\\Test';
 
   public function generators(
-  ): Iterator<Pair<GenerateType, FileGeneratable<string>>> {
+  ): Iterator<Pair<GeneratorName, FileGeneratable<string>>> {
     yield define_generator("lib:class", "generate library class file.")
       ->mapTo(
         namespace_of(static::LIB, 'example/src')

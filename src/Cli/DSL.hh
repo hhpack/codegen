@@ -11,16 +11,12 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{
-  OutputNamespace,
-  GenerateType,
-  DefinedMetaData,
-  DefinedGenerator,
-  ClassFileGenerator,
-  GeneratorMapper
-};
+use HHPack\Codegen\{OutputNamespace, GeneratorName};
 
-function define_generator(string $name, string $description): GeneratorMapper {
+function define_generator(
+  GeneratorName $name,
+  string $description,
+): GeneratorMapper {
   return new GeneratorMapper(new DefinedMetaData($name, $description));
 }
 

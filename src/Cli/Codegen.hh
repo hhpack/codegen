@@ -11,14 +11,8 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{
-  LibraryFileGenerator,
-  ClassFileGenerator,
-  GenerateType,
-  ClassFileGeneratable,
-  OutputNamespace,
-  ClassName
-};
+use HHPack\Codegen\{ProjectFileGenerator, GeneratorName, ClassName};
+use HHPack\Codegen\Contract\{GeneratorProvider};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use function HHPack\Getopt\{optparser, take_on, on};
@@ -82,7 +76,7 @@ final class Codegen {
   }
 
   private function generateBy(
-    Pair<GenerateType, ClassName> $generateClass,
+    Pair<GeneratorName, ClassName> $generateClass,
   ): void {
     $classFile = $this->generateFile($generateClass);
     $result = $classFile->save();
@@ -106,11 +100,11 @@ final class Codegen {
   }
 
   private function generateFile(
-    Pair<GenerateType, ClassName> $generateClass,
+    Pair<GeneratorName, ClassName> $generateClass,
   ): CodegenFile {
     $generators = $this->provider->generators();
 
-    $generator = LibraryFileGenerator::fromItems($generators);
+    $generator = ProjectFileGenerator::fromItems($generators);
     return $generator->generate($generateClass);
   }
 
