@@ -31,21 +31,21 @@ function dev_roots(): ImmSet<string> {
  * Return the normalize path
  */
 function normalize_path(string $path): string {
-  $position = Str\search($path, '/');
+  $normalizePath = $path;
 
-  if ($position !== null) {
-    $path = Str\slice($path, 0, 1);
+  // /path/to -> path/to
+  if (Str\slice($normalizePath, 0, 1) === '/') {
+    $len = Str\length($normalizePath);
+    $normalizePath = Str\slice($normalizePath, 1, $len);
   }
 
-  $lastIndex = Str\length($path) - 1;
+  $lastIndex = Str\length($normalizePath) - 1;
 
-  $position = Str\search($path, '/');
-
-  if ($position === $lastIndex) {
-    $path = Str\slice($path, 0, $lastIndex);
+  if (Str\slice($normalizePath, $lastIndex, 1) === '/') {
+    $normalizePath = Str\slice($normalizePath, 0, $lastIndex);
   }
 
-  return $path;
+  return $normalizePath;
 }
 
 /**
