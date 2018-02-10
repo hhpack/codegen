@@ -9,7 +9,11 @@ use HHPack\Codegen\{
   OutputNamespace
 };
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
-use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig, CodegenFileResult};
+use Facebook\HackCodegen\{
+  HackCodegenFactory,
+  HackCodegenConfig,
+  CodegenFileResult
+};
 use HackPack\HackUnit\Contract\Assert;
 
 final class LibraryFileGeneratorTest {
@@ -25,12 +29,7 @@ final class LibraryFileGeneratorTest {
     $tempDirectory = sys_get_temp_dir();
     $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
     $libraryGenerator = LibraryFileGenerator::fromItems(
-      [
-        Pair {
-          GenerateType::TestClass,
-          $namespace->map(TestClassGenerator::class),
-        },
-      ],
+      [Pair {"test", $namespace->map(TestClassGenerator::class)}],
     );
 
     return new self($libraryGenerator, $tempDirectory);
@@ -48,10 +47,7 @@ final class LibraryFileGeneratorTest {
 
   <<Test('Factory')>>
   public function test(Assert $assert): void {
-    $newTestClass = Pair {
-      GenerateType::TestClass,
-      static::GENERATE_CLASS_NAME,
-    };
+    $newTestClass = Pair {'test', static::GENERATE_CLASS_NAME};
     $result = $this->generator->generate($newTestClass)->save();
 
     $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');

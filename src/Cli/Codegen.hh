@@ -16,7 +16,8 @@ use HHPack\Codegen\{
   ClassFileGenerator,
   GenerateType,
   ClassFileGeneratable,
-  OutputNamespace
+  OutputNamespace,
+  ClassName
 };
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
@@ -27,6 +28,7 @@ use Facebook\DefinitionFinder\{TreeParser};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
   HackCodegenConfig,
+  CodegenFile,
   CodegenFileResult
 };
 
@@ -37,6 +39,7 @@ final class Codegen {
   private bool $help = false;
   private bool $version = false;
   private OptionParser $optionParser;
+  private GeneratorProvider $provider;
 
   public function __construct() {
     $this->optionParser = optparser(
@@ -57,6 +60,8 @@ final class Codegen {
         ),
       ],
     );
+
+    $this->provider = new DevGeneratorProvider(dev_roots());
   }
 
   public function run(Traversable<string> $argv): void {
@@ -71,19 +76,15 @@ final class Codegen {
     } else {
       $type = $remainArgs->at(0);
       $name = $remainArgs->at(1);
-      $genType = GenerateType::assert($type);
 
-      $this->generateBy(Pair {$genType, $name});
+      $this->generateBy(Pair {$type, $name});
     }
   }
 
   private function generateBy(
-    Pair<GenerateType, string> $generateClass,
+    Pair<GenerateType, ClassName> $generateClass,
   ): void {
-    $generators = (new DevGeneratorProvider(dev_roots()))->generators();
-
-    $generator = LibraryFileGenerator::fromItems($generators);
-    $classFile = $generator->generate($generateClass);
+    $classFile = $this->generateFile($generateClass);
     $result = $classFile->save();
 
     if ($result === CodegenFileResult::CREATE) {
@@ -102,6 +103,15 @@ final class Codegen {
         sprintf("File %s is already exists\n", $classFile->getFileName()),
       );
     }
+  }
+
+  private function generateFile(
+    Pair<GenerateType, ClassName> $generateClass,
+  ): CodegenFile {
+    $generators = $this->provider->generators();
+
+    $generator = LibraryFileGenerator::fromItems($generators);
+    return $generator->generate($generateClass);
   }
 
   private function displayVersion(): void {

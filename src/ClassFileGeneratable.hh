@@ -14,6 +14,6 @@ namespace HHPack\Codegen;
 use Facebook\HackCodegen\{ICodegenFactory, CodegenFile};
 
 interface ClassFileGeneratable extends FileGeneratable<GenerateClass> {
-  public function generate(GenerateClass $name): CodegenFile;
+  public function generate(GenerateClass $target): CodegenFile;
   public static function from(ICodegenFactory $factory): this;
 }

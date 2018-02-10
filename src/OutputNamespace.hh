@@ -29,6 +29,15 @@ final class OutputNamespace {
     return $this->mappedPath;
   }
 
+  /**
+   * Return the new namespace to which it belongs
+   *
+   * ```hack
+   * $output = new OutputNamespace("Foo\\Bar", ".");
+   * echo $output->belongsNamespace("Foo1"); // Foo\\Bar\\Foo1
+   * echo $output->belongsNamespace("Foo1\\Bar1"); // Foo\\Bar\\Foo1\\Bar1
+   * ```
+   */
   public function belongsNamespace(?string $name = null): string {
     if (is_null($name)) {
       return $this->name;
@@ -45,6 +54,16 @@ final class OutputNamespace {
     return $className->relativeFilePath($this->name);
   }
 
+  /**
+   * Return the class name belonging to the output target namespace
+   *
+   * ```hack
+   * $output = new OutputNamespace("Foo\\Bar", ".");
+   * $className = $output->classNameOf("Foo1");
+   * echo $className->namespace() // Foo\\Bar
+   * echo $className->name() // Foo1
+   * ```
+   */
   public function classNameOf(string $name): OutputClassName {
     $parts = Str\split($name, '\\');
     $className = C\lastx($parts);
@@ -58,10 +77,17 @@ final class OutputNamespace {
     return new OutputClassName($namespace, $className);
   }
 
+  public function resolveClassNameOf(
+    OutputClassName $className,
+  ): OutputClassName {
+    $namespace = $this->belongsNamespace($className->namespace());
+    return new OutputClassName($namespace, $className->name());
+  }
+
   public function map<Tu as ClassFileGeneratable>(
     classname<Tu> $className,
   ): ClassFileGenerator {
-    $config = new HackCodegenConfig($this->mappedPath);
+    $config = (new HackCodegenConfig())->withRootDir($this->mappedPath);
     $factory = new HackCodegenFactory($config);
     return new ClassFileGenerator($this, $className::from($factory));
   }
@@ -70,7 +96,7 @@ final class OutputNamespace {
   public function createGenerator<Tu as ClassFileGeneratable>(
     classname<Tu> $className,
   ): ClassFileGenerator {
-    $config = new HackCodegenConfig($this->mappedPath);
+    $config = (new HackCodegenConfig())->withRootDir($this->mappedPath);
     $factory = new HackCodegenFactory($config);
     return new ClassFileGenerator($this, $className::from($factory));
   }

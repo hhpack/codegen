@@ -4,7 +4,11 @@ namespace HHPack\Codegen\Test;
 
 use HHPack\Codegen\{ClassFileGenerator, OutputNamespace};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
-use Facebook\HackCodegen\{HackCodegenFactory, HackCodegenConfig, CodegenFileResult};
+use Facebook\HackCodegen\{
+  HackCodegenFactory,
+  HackCodegenConfig,
+  CodegenFileResult
+};
 use HackPack\HackUnit\Contract\Assert;
 
 final class ClassFileGeneratorTest {
@@ -21,7 +25,8 @@ final class ClassFileGeneratorTest {
   public static function generatorFactory(): this {
     $tempDirectory = sys_get_temp_dir();
     $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
-    $config = new HackCodegenConfig($namespace->path());
+
+    $config = (new HackCodegenConfig())->withRootDir($namespace->path());
     $generator = new TestClassGenerator(new HackCodegenFactory($config));
 
     return new self(

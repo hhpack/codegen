@@ -11,7 +11,8 @@
 
 namespace HHPack\Codegen;
 
-enum GenerateType : string {
-  LibraryClass = "lib";
-  TestClass = "test";
-}
+type GenerateType = string;
+
+type ClassName = string;
+
+type PackageClassFileGeneratable = FileGeneratable<ClassName>;
