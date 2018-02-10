@@ -11,11 +11,7 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{
-  ProjectFileGenerator,
-  GeneratorName,
-  ClassName
-};
+use HHPack\Codegen\{ProjectFileGenerator, GeneratorName, ClassName};
 use HHPack\Codegen\Contract\{GeneratorProvider};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};

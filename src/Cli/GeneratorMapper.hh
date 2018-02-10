@@ -11,7 +11,7 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{GeneratorName,ClassName,ClassFileGenerator};
+use HHPack\Codegen\{GeneratorName, ClassName, ClassFileGenerator};
 
 final class GeneratorMapper {
 

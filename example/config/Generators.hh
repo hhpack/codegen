@@ -3,7 +3,7 @@
 namespace HHPack\Codegen\Example;
 
 use HHPack\Codegen\{OutputNamespace, GeneratorName};
-use HHPack\Codegen\Contract\{FileGeneratable,GeneratorProvider};
+use HHPack\Codegen\Contract\{FileGeneratable, GeneratorProvider};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use function HHPack\Codegen\Cli\{define_generator, namespace_of, map_to};

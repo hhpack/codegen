@@ -2,10 +2,7 @@
 
 namespace HHPack\Codegen\Test;
 
-use HHPack\Codegen\{
-  ProjectFileGenerator,
-  OutputNamespace
-};
+use HHPack\Codegen\{ProjectFileGenerator, OutputNamespace};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
