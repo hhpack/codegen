@@ -19,6 +19,7 @@
     "facebook/hack-codegen": "^3.0",
     "hhpack/getopt": "^1.4.0",
     "facebook/definition-finder": "^1.6",
+    "hhvm/type-assert": "^3.2",
     "hhvm/hsl": "^1.0"
   },
   "require-dev": {
