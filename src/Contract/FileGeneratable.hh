@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Contract;
 
 use Facebook\HackCodegen\{CodegenFile};
 

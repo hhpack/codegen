@@ -8,8 +8,11 @@ use HackPack\HackUnit\Contract\Assert;
 final class HHAutoloadTest {
   <<Test>>
   public function testNormalizePath(Assert $assert): void {
-    $assert->string(normalize_path("/example/path/to"))->is("example/path/to");
-    $assert->string(normalize_path("example/path/to/"))->is("example/path/to");
-    $assert->string(normalize_path("/example/path/to/"))->is("example/path/to");
+    $assert->string(normalize_path("/example/path/to"))
+      ->is("example/path/to");
+    $assert->string(normalize_path("example/path/to/"))
+      ->is("example/path/to");
+    $assert->string(normalize_path("/example/path/to/"))
+      ->is("example/path/to");
   }
 }

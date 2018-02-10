@@ -11,6 +11,7 @@
 
 namespace HHPack\Codegen;
 
+use HHPack\Codegen\Contract\{ClassFileGeneratable};
 use HH\Lib\{Str, Vec, C};
 use Facebook\HackCodegen\{HackCodegenConfig, HackCodegenFactory};
 
