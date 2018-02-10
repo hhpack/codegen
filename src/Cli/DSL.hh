@@ -27,10 +27,3 @@ function define_generator(string $name, string $description): GeneratorMapper {
 function namespace_of(string $name, string $path): OutputNamespace {
   return new OutputNamespace($name, $path);
 }
-
-function map_to(
-  DefinedMetaData $meta,
-  ClassFileGenerator $generator,
-): Pair<GenerateType, DefinedGenerator> {
-  return Pair {$meta->name(), new DefinedGenerator($meta, $generator)};
-}

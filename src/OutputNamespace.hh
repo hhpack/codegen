@@ -91,14 +91,4 @@ final class OutputNamespace {
     $factory = new HackCodegenFactory($config);
     return new ClassFileGenerator($this, $className::from($factory));
   }
-
-  <<__Deprecated('Please use map method instead')>>
-  public function createGenerator<Tu as ClassFileGeneratable>(
-    classname<Tu> $className,
-  ): ClassFileGenerator {
-    $config = (new HackCodegenConfig())->withRootDir($this->mappedPath);
-    $factory = new HackCodegenFactory($config);
-    return new ClassFileGenerator($this, $className::from($factory));
-  }
-
 }
