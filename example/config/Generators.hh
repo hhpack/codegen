@@ -14,18 +14,14 @@ final class Generators implements GeneratorProvider {
 
   public function generators(
   ): Iterator<Pair<GenerateType, FileGeneratable<string>>> {
-    yield define_generator("lib", "generate library class file.")
-      |> map_to(
-        $$,
-        namespace_of(static::LIB, 'example/src')
-          ->map(PackageClassGenerator::class),
-      );
+    yield define_generator("lib", "generate library class file.")->mapTo(
+      namespace_of(static::LIB, 'example/src')
+        ->map(PackageClassGenerator::class),
+    );
 
-    yield define_generator("test", "generate test class file.")
-      |> map_to(
-        $$,
-        namespace_of(static::LIB_TEST, 'example/test')
-          ->map(TestClassGenerator::class),
-      );
+    yield define_generator("test", "generate test class file.")->mapTo(
+      namespace_of(static::LIB_TEST, 'example/test')
+        ->map(TestClassGenerator::class),
+    );
   }
 }

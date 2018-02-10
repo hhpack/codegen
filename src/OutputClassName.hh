@@ -48,7 +48,7 @@ final class OutputClassName {
     return $path.'.hh';
   }
 
-  public static function fromString(string $name) : this {
+  public static function fromString(string $name): this {
     $parts = Str\split($name, '\\');
 
     if (C\count($parts) <= 1) {

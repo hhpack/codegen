@@ -16,11 +16,12 @@ use HHPack\Codegen\{
   GenerateType,
   DefinedMetaData,
   DefinedGenerator,
-  ClassFileGenerator
+  ClassFileGenerator,
+  GeneratorMapper
 };
 
-function define_generator(string $name, string $description): DefinedMetaData {
-  return new DefinedMetaData($name, $description);
+function define_generator(string $name, string $description): GeneratorMapper {
+  return new GeneratorMapper(new DefinedMetaData($name, $description));
 }
 
 function namespace_of(string $name, string $path): OutputNamespace {

@@ -77,7 +77,9 @@ final class OutputNamespace {
     return new OutputClassName($namespace, $className);
   }
 
-  public function resolveClassNameOf(OutputClassName $className): OutputClassName {
+  public function resolveClassNameOf(
+    OutputClassName $className,
+  ): OutputClassName {
     $namespace = $this->belongsNamespace($className->namespace());
     return new OutputClassName($namespace, $className->name());
   }
