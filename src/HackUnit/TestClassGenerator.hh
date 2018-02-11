@@ -11,7 +11,7 @@
 
 namespace HHPack\Codegen\HackUnit;
 
-use HHPack\Codegen\{GenerateClass};
+use HHPack\Codegen\{GenerateClassFile};
 use HHPack\Codegen\Contract\{FileGeneratable, ClassFileGeneratable};
 use Facebook\HackCodegen\{
   ICodegenFactory,
@@ -28,7 +28,7 @@ final class TestClassGenerator implements ClassFileGeneratable {
     return new self($factory);
   }
 
-  public function generate(GenerateClass $target): CodegenFile {
+  public function generate(GenerateClassFile $target): CodegenFile {
     return
       $this->cg
         ->codegenFile($target->fileName())

@@ -24,7 +24,7 @@ final class ClassFileGenerator implements FileGeneratable<ClassName> {
     $className = $this->namespace->classNameOf($name);
     $relativeFilePath = $this->namespace->relativeClassFilePath($className);
 
-    $newClass = new GenerateClass($className, $relativeFilePath);
+    $newClass = new GenerateClassFile($className, $relativeFilePath);
 
     return $this->generator->generate($newClass);
   }

@@ -2,7 +2,7 @@
 
 namespace HHPack\Codegen\Test\HackUnit;
 
-use HHPack\Codegen\{GenerateClass, OutputClassName};
+use HHPack\Codegen\{GenerateClassFile, OutputClassName};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
@@ -44,7 +44,7 @@ final class PackageClassGeneratorTest {
   <<Test('Factory')>>
   public function test(Assert $assert): void {
     $className = new OutputClassName(static::NS, static::CN);
-    $class = new GenerateClass($className, static::CF);
+    $class = new GenerateClassFile($className, static::CF);
 
     $result = $this->generator->generate($class)->save();
 

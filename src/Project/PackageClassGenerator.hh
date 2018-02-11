@@ -11,7 +11,7 @@
 
 namespace HHPack\Codegen\Project;
 
-use HHPack\Codegen\{GenerateClass};
+use HHPack\Codegen\{GenerateClassFile};
 use HHPack\Codegen\Contract\{ClassFileGeneratable};
 use Facebook\HackCodegen\{ICodegenFactory, CodegenFile, CodegenClass};
 
@@ -23,7 +23,7 @@ final class PackageClassGenerator implements ClassFileGeneratable {
     return new self($factory);
   }
 
-  public function generate(GenerateClass $target): CodegenFile {
+  public function generate(GenerateClassFile $target): CodegenFile {
     return
       $this->cg
         ->codegenFile($target->fileName())

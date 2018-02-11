@@ -11,20 +11,32 @@
 
 namespace HHPack\Codegen;
 
-final class GenerateClass {
+/**
+ * Generate class file
+ */
+final class GenerateClassFile {
   public function __construct(
     private OutputClassName $className,
     private string $path,
   ) {}
 
+  /**
+   * The namespace to which the class belongs
+   */
   public function belongsNamespace(): string {
     return $this->className->namespace();
   }
 
+  /**
+   * Name of the class
+   */
   public function name(): string {
     return $this->className->name();
   }
 
+  /**
+   * Path of class file
+   */
   public function fileName(): string {
     return $this->path;
   }
