@@ -28,11 +28,14 @@ final class GeneratorRegistry {
   }
 
   public static function fromItems(
-    Traversable<NamedGenerator> $generators
+    Traversable<NamedGenerator> $generators,
   ): this {
-    $mappedGenerators = Vec\map($generators, ($generator) ==> {
-      return Pair { $generator->name(), $generator };
-    });
+    $mappedGenerators = Vec\map(
+      $generators,
+      ($generator) ==> {
+        return Pair {$generator->name(), $generator};
+      },
+    );
     return new self($mappedGenerators);
   }
 }

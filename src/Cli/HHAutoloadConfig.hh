@@ -17,16 +17,15 @@ use function \Facebook\TypeAssert\{matches_type_structure};
 final class HHAutoloadConfig {
   const type T = shape(
     'roots' => Traversable<string>,
-    'devRoots' => Traversable<string>
+    'devRoots' => Traversable<string>,
   );
 
-  public function __construct(private this::T $config) {
-  }
+  public function __construct(private this::T $config) {}
 
   public function devRoots(): ImmSet<string> {
-    return ImmSet::fromItems($this->config['devRoots'])->map(
-      ($path) ==> $this->normalizePath($path)
-    );
+    return
+      ImmSet::fromItems($this->config['devRoots'])
+        ->map(($path) ==> $this->normalizePath($path));
   }
 
   /**
@@ -39,7 +38,8 @@ final class HHAutoloadConfig {
 
     $autoloadJson = file_get_contents($jsonPath);
     $json = json_decode($autoloadJson, true, 512, JSON_FB_HACK_ARRAYS);
-    $validJson = matches_type_structure(type_structure(self::class, 'T'), $json);
+    $validJson =
+      matches_type_structure(type_structure(self::class, 'T'), $json);
 
     if (!Shapes::keyExists($validJson, 'devRoots')) {
       throw new \RuntimeException('devRoots is not in the configuration');

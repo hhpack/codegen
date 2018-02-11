@@ -25,7 +25,13 @@ final class ProjectFileGeneratorTest {
     $tempDirectory = sys_get_temp_dir();
     $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
     $projectGenerator = ProjectFileGenerator::fromItems(
-      [new NamedGeneratorMock("test", "test", $namespace->map(TestClassGenerator::class))]
+      [
+        new NamedGeneratorMock(
+          "test",
+          "test",
+          $namespace->map(TestClassGenerator::class),
+        ),
+      ],
     );
     return new self($projectGenerator, $tempDirectory);
   }

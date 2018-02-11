@@ -11,8 +11,7 @@ final class Generators implements GeneratorProvider {
   const LIB = 'HHPack\\Codegen\\Example';
   const LIB_TEST = 'HHPack\\Codegen\\Example\\Test';
 
-  public function generators(
-  ): Iterator<NamedGenerator> {
+  public function generators(): Iterator<NamedGenerator> {
     yield define_generator("lib:class", "generate library class file.")
       ->mapTo(
         namespace_of(static::LIB, 'example/src')

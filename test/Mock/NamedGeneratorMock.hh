@@ -3,7 +3,7 @@
 namespace HHPack\Codegen\Test\Mock;
 
 use HHPack\Codegen\{ClassName};
-use HHPack\Codegen\Contract\{FileGeneratable,NamedGenerator};
+use HHPack\Codegen\Contract\{FileGeneratable, NamedGenerator};
 use Facebook\HackCodegen\{CodegenFile};
 
 final class NamedGeneratorMock implements NamedGenerator {
@@ -11,15 +11,14 @@ final class NamedGeneratorMock implements NamedGenerator {
   public function __construct(
     private string $name,
     private string $description,
-    private FileGeneratable<ClassName> $generator
-  ) {
-  }
+    private FileGeneratable<ClassName> $generator,
+  ) {}
 
-  public function name() : string {
+  public function name(): string {
     return $this->name;
   }
 
-  public function description() : string {
+  public function description(): string {
     return $this->description;
   }
 

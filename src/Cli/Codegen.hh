@@ -25,7 +25,7 @@ use Facebook\HackCodegen\{
   CodegenFile,
   CodegenFileResult
 };
-use HH\Lib\{Vec,Str,Math};
+use HH\Lib\{Vec, Str, Math};
 
 final class Codegen {
   const string PROGRAM_NAME = 'codegen';
@@ -123,8 +123,13 @@ final class Codegen {
       sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME),
     );
 
-    fwrite(STDOUT, sprintf("Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n",
-      $this->generatorHelp()));
+    fwrite(
+      STDOUT,
+      sprintf(
+        "Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n",
+        $this->generatorHelp(),
+      ),
+    );
 
     $this->optionParser->displayHelp();
   }
@@ -134,9 +139,13 @@ final class Codegen {
 
     $generators = ImmVector::fromItems($mappedGenerators);
 
-    $nameLength = Vec\map($generators, ($generator) ==> {
-      return Str\length($generator->name());
-    }) |> Math\max($$);
+    $nameLength =
+      Vec\map(
+        $generators,
+        ($generator) ==> {
+          return Str\length($generator->name());
+        },
+      ) |> Math\max($$);
 
     $formatter = ($generator) ==> {
       $paddingName = $generator->name();

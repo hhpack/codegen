@@ -12,7 +12,7 @@
 namespace HHPack\Codegen;
 
 use Facebook\HackCodegen\{CodegenFile};
-use HHPack\Codegen\Contract\{FileGeneratable,NamedGenerator};
+use HHPack\Codegen\Contract\{FileGeneratable, NamedGenerator};
 
 final class ProjectFileGenerator
   implements FileGeneratable<Pair<GeneratorName, ClassName>> {
@@ -27,7 +27,7 @@ final class ProjectFileGenerator
   }
 
   public static function fromItems(
-    Traversable<NamedGenerator> $generators
+    Traversable<NamedGenerator> $generators,
   ): this {
     return new self(GeneratorRegistry::fromItems($generators));
   }

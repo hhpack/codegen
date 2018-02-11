@@ -17,9 +17,7 @@ final class GeneratorMapper {
 
   public function __construct(private DefinedMetaData $meta) {}
 
-  public function mapTo(
-    ClassFileGenerator $generator,
-  ): DefinedGenerator {
+  public function mapTo(ClassFileGenerator $generator): DefinedGenerator {
     return new DefinedGenerator($this->meta, $generator);
   }
 }

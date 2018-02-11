@@ -12,7 +12,7 @@
 namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{ClassName};
-use HHPack\Codegen\Contract\{NamedGenerator,FileGeneratable};
+use HHPack\Codegen\Contract\{NamedGenerator, FileGeneratable};
 use Facebook\HackCodegen\{CodegenFile};
 
 final class DefinedGenerator implements NamedGenerator {
