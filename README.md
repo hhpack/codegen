@@ -17,8 +17,7 @@ In the configuration file, you define the namespace and generator linkage.
 
 namespace MyPackage\Generators;
 
-use HHPack\Codegen\{GeneratorName};
-use HHPack\Codegen\Contract\{FileGeneratable, GeneratorProvider};
+use HHPack\Codegen\Contract\{NamedGenerator, GeneratorProvider};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use function HHPack\Codegen\Cli\{define_generator, namespace_of};
@@ -27,9 +26,7 @@ final class Generators implements GeneratorProvider {
   const LIB = 'HHPack\\Codegen\\Example';
   const LIB_TEST = 'HHPack\\Codegen\\Example\\Test';
 
-  public function generators(
-  ): Iterator<Pair<GeneratorName, FileGeneratable<string>>> {
-  
+  public function generators(): Iterator<NamedGenerator> {
     /**
      * vendor/bin/codegen lib:class LibClass
      */
@@ -76,7 +73,7 @@ vendor/bin/codegen [GEN_NANE] LibClass
 If you want to use your own generator, implement **ClassFileGeneratable**.
 
 ```hack
-use HHPack\Codegen\{GenerateClass};
+use HHPack\Codegen\{GenerateClassFile};
 use HHPack\Codegen\Contract\{ClassFileGeneratable};
 use Facebook\HackCodegen\{ICodegenFactory, CodegenFile, CodegenClass};
 
@@ -88,7 +85,7 @@ final class CustomClassGenerator implements ClassFileGeneratable {
     return new self($factory);
   }
 
-  public function generate(GenerateClass $target): CodegenFile {
+  public function generate(GenerateClassFile $target): CodegenFile {
     return
       $this->cg
         ->codegenFile($target->fileName())
