@@ -12,7 +12,7 @@
 namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{ProjectFileGenerator, GeneratorName, ClassName};
-use HHPack\Codegen\Contract\{GeneratorProvider};
+use HHPack\Codegen\Contract\{Output,GeneratorProvider};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use function HHPack\Getopt\{optparser, take_on, on};
@@ -36,7 +36,9 @@ final class Codegen {
   private OptionParser $optionParser;
   private GeneratorProvider $provider;
 
-  public function __construct() {
+  public function __construct(
+    private Output $output = new ConsoleOutput()
+  ) {
     $this->optionParser = optparser(
       [
         on(
@@ -84,20 +86,11 @@ final class Codegen {
     $result = $classFile->save();
 
     if ($result === CodegenFileResult::CREATE) {
-      fwrite(
-        STDOUT,
-        sprintf("File %s is created\n", $classFile->getFileName()),
-      );
+      $this->output->info(sprintf("File %s is created\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::UPDATE) {
-      fwrite(
-        STDOUT,
-        sprintf("File %s is updated\n", $classFile->getFileName()),
-      );
+      $this->output->info(sprintf("File %s is updated\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::NONE) {
-      fwrite(
-        STDOUT,
-        sprintf("File %s is already exists\n", $classFile->getFileName()),
-      );
+      $this->output->info(sprintf("File %s is already exists\n", $classFile->getFileName()));
     }
   }
 
@@ -111,26 +104,12 @@ final class Codegen {
   }
 
   private function displayVersion(): void {
-    fwrite(
-      STDOUT,
-      sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION),
-    );
+    $this->output->info(sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION));
   }
 
   private function displayHelp(): void {
-    fwrite(
-      STDOUT,
-      sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME),
-    );
-
-    fwrite(
-      STDOUT,
-      sprintf(
-        "Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n",
-        $this->generatorHelp(),
-      ),
-    );
-
+    $this->output->info(sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME));
+    $this->output->info(sprintf("Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n", $this->generatorHelp()));
     $this->optionParser->displayHelp();
   }
 
