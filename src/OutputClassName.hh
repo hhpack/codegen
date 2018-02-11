@@ -11,6 +11,8 @@
 
 namespace HHPack\Codegen;
 
+use HH\Lib\{Str, Vec, C};
+
 final class OutputClassName {
 
   public function __construct(
@@ -27,12 +29,13 @@ final class OutputClassName {
   }
 
   public function withoutNamespace(string $namespace): string {
-    $without = str_replace($namespace, '', $this->namespace);
-    $c = explode('\\', $without);
-    array_shift($c);
-    $v = implode('\\', $c);
+    $v =
+      Str\replace($this->namespace, $namespace, '')
+        |> Str\split($$, '\\')
+        |> Vec\slice($$, 1)
+        |> Str\join($$, '\\');
 
-    if (strlen($v) <= 0) {
+    if (Str\length($v) <= 0) {
       return $this->name;
     }
 
@@ -40,8 +43,21 @@ final class OutputClassName {
   }
 
   public function relativeFilePath(string $namespace): string {
-    $path = implode('/', explode('\\', $this->withoutNamespace($namespace)));
+    $path = Str\split($this->withoutNamespace($namespace), '\\')
+      |> Str\join($$, '/');
     return $path.'.hh';
   }
 
+  public static function fromString(string $name): this {
+    $parts = Str\split($name, '\\');
+
+    if (C\count($parts) <= 1) {
+      $namespace = '';
+    } else {
+      $namespace = Vec\slice($parts, 0, C\count($parts) - 1)
+        |> Str\join($$, '\\');
+    }
+    $className = C\lastx($parts);
+    return new self($namespace, $className);
+  }
 }

@@ -11,7 +11,8 @@
 
 namespace HHPack\Codegen\HackUnit;
 
-use HHPack\Codegen\{GenerateClass, ClassFileGeneratable};
+use HHPack\Codegen\{GenerateClassFile};
+use HHPack\Codegen\Contract\{FileGeneratable, ClassFileGeneratable};
 use Facebook\HackCodegen\{
   ICodegenFactory,
   CodegenFile,
@@ -27,14 +28,13 @@ final class TestClassGenerator implements ClassFileGeneratable {
     return new self($factory);
   }
 
-  public function generate(GenerateClass $class): CodegenFile {
+  public function generate(GenerateClassFile $target): CodegenFile {
     return
       $this->cg
-        ->codegenFile($class->fileName())
-        ->setIsStrict(true)
-        ->setNamespace($class->belongsNamespace())
+        ->codegenFile($target->fileName())
+        ->setNamespace($target->belongsNamespace())
         ->useNamespace('HackPack\HackUnit\Contract\Assert')
-        ->addClass($this->classOf($class->name()));
+        ->addClass($this->classOf($target->name()));
   }
 
   private function classOf(string $className): CodegenClass {
@@ -50,7 +50,7 @@ final class TestClassGenerator implements ClassFileGeneratable {
       $this->cg
         ->codegenMethod('exampleTest')
         ->setIsFinal(true)
-        ->setUserAttribute('Test')
+        ->addEmptyUserAttribute('Test')
         ->addParameter('Assert $assert')
         ->setReturnType('void')
         ->setBody('$assert->bool(true)->is(true);');

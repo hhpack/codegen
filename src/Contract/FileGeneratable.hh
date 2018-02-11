@@ -9,11 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen\Cli;
+namespace HHPack\Codegen\Contract;
 
-use HHPack\Codegen\{GenerateType, ClassFileGenerator};
+use Facebook\HackCodegen\{CodegenFile};
 
-interface GeneratorProvider {
-  public function generators(
-  ): Iterator<Pair<GenerateType, ClassFileGenerator>>;
+interface FileGeneratable<T> {
+  public function generate(T $target): CodegenFile;
 }

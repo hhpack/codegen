@@ -11,13 +11,8 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{
-  LibraryFileGenerator,
-  ClassFileGenerator,
-  GenerateType,
-  ClassFileGeneratable,
-  OutputNamespace
-};
+use HHPack\Codegen\{ProjectFileGenerator, GeneratorName, ClassName};
+use HHPack\Codegen\Contract\{Output,GeneratorProvider};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use function HHPack\Getopt\{optparser, take_on, on};
@@ -27,8 +22,10 @@ use Facebook\DefinitionFinder\{TreeParser};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
   HackCodegenConfig,
+  CodegenFile,
   CodegenFileResult
 };
+use HH\Lib\{Vec, Str, Math};
 
 final class Codegen {
   const string PROGRAM_NAME = 'codegen';
@@ -37,8 +34,11 @@ final class Codegen {
   private bool $help = false;
   private bool $version = false;
   private OptionParser $optionParser;
+  private GeneratorProvider $provider;
 
-  public function __construct() {
+  public function __construct(
+    private Output $output = new ConsoleOutput()
+  ) {
     $this->optionParser = optparser(
       [
         on(
@@ -57,6 +57,9 @@ final class Codegen {
         ),
       ],
     );
+
+    $config = HHAutoloadConfig::fromWorkingDirectory();
+    $this->provider = new DevGeneratorProvider($config->devRoots());
   }
 
   public function run(Traversable<string> $argv): void {
@@ -71,55 +74,69 @@ final class Codegen {
     } else {
       $type = $remainArgs->at(0);
       $name = $remainArgs->at(1);
-      $genType = GenerateType::assert($type);
 
-      $this->generateBy(Pair {$genType, $name});
+      $this->generateBy(Pair {$type, $name});
     }
   }
 
   private function generateBy(
-    Pair<GenerateType, string> $generateClass,
+    Pair<GeneratorName, ClassName> $generateClass,
   ): void {
-    $generators = (new DevGeneratorProvider(dev_roots()))->generators();
-
-    $generator = LibraryFileGenerator::fromItems($generators);
-    $classFile = $generator->generate($generateClass);
+    $classFile = $this->generateFile($generateClass);
     $result = $classFile->save();
 
     if ($result === CodegenFileResult::CREATE) {
-      fwrite(
-        STDOUT,
-        sprintf("File %s is created\n", $classFile->getFileName()),
-      );
+      $this->output->info(sprintf("File %s is created\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::UPDATE) {
-      fwrite(
-        STDOUT,
-        sprintf("File %s is updated\n", $classFile->getFileName()),
-      );
+      $this->output->info(sprintf("File %s is updated\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::NONE) {
-      fwrite(
-        STDOUT,
-        sprintf("File %s is already exists\n", $classFile->getFileName()),
-      );
+      $this->output->info(sprintf("File %s is already exists\n", $classFile->getFileName()));
     }
   }
 
+  private function generateFile(
+    Pair<GeneratorName, ClassName> $generateClass,
+  ): CodegenFile {
+    $generators = $this->provider->generators();
+
+    $generator = ProjectFileGenerator::fromItems($generators);
+    return $generator->generate($generateClass);
+  }
+
   private function displayVersion(): void {
-    fwrite(
-      STDOUT,
-      sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION),
-    );
+    $this->output->info(sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION));
   }
 
   private function displayHelp(): void {
-    fwrite(
-      STDOUT,
-      sprintf("Usage: %s [OPTIONS] [TYPE] [NAME]\n\n", static::PROGRAM_NAME),
-    );
-    fwrite(STDOUT, "Arguments:\n");
-    fwrite(STDOUT, "  TYPE: generate type (ex. lib, test) \n");
-    fwrite(STDOUT, "  NAME: generate class name (ex. Foo\\Bar)\n\n");
+    $this->output->info(sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME));
+    $this->output->info(sprintf("Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n", $this->generatorHelp()));
     $this->optionParser->displayHelp();
   }
 
+  private function generatorHelp(): string {
+    $mappedGenerators = $this->provider->generators();
+
+    $generators = ImmVector::fromItems($mappedGenerators);
+
+    $nameLength =
+      Vec\map(
+        $generators,
+        ($generator) ==> {
+          return Str\length($generator->name());
+        },
+      ) |> Math\max($$);
+
+    $formatter = ($generator) ==> {
+      $paddingName = $generator->name();
+      if ($nameLength !== null) {
+        $paddingName = Str\pad_right($generator->name(), $nameLength);
+      }
+      return sprintf("    %s   %s", $paddingName, $generator->description());
+    };
+
+    $help = Vec\map($generators, $formatter)
+      |> Str\join($$, "\n");
+
+    return sprintf("   GEN: generator name (ex. lib, test)\n%s\n", $help);
+  }
 }

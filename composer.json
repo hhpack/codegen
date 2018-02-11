@@ -16,13 +16,21 @@
   "require": {
     "hhvm": ">=3.21.0",
     "hhvm/hhvm-autoload": "^1.5",
-    "facebook/hack-codegen": "^2.2",
+    "facebook/hack-codegen": "^3.0",
     "hhpack/getopt": "^1.4.0",
-    "facebook/definition-finder": "^1.6"
+    "facebook/definition-finder": "^1.6",
+    "hhvm/type-assert": "^3.2",
+    "hhvm/hsl": "^1.0"
   },
   "require-dev": {
     "hackpack/hackunit": "^1.1"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/holyshared/HackUnit"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "HHPack\\Codegen\\": "src"

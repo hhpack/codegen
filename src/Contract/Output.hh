@@ -9,9 +9,8 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Contract;
 
-enum GenerateType : string {
-  LibraryClass = "lib";
-  TestClass = "test";
+interface Output {
+  public function info(string $message): void;
 }

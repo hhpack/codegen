@@ -12,22 +12,23 @@
 namespace HHPack\Codegen;
 
 use Facebook\HackCodegen\{CodegenFile};
+use HHPack\Codegen\Contract\{FileGeneratable, NamedGenerator};
 
-final class LibraryFileGenerator
-  implements FileGeneratable<Pair<GenerateType, string>> {
+final class ProjectFileGenerator
+  implements FileGeneratable<Pair<GeneratorName, ClassName>> {
   public function __construct(private GeneratorRegistry $registry) {}
 
   public function generate(
-    Pair<GenerateType, string> $typeOfClass,
+    Pair<GeneratorName, ClassName> $target,
   ): CodegenFile {
-    list($type, $name) = $typeOfClass;
-    $generator = $this->registry->get($type);
+    list($alias, $name) = $target;
+    $generator = $this->registry->get($alias);
     return $generator->generate($name);
   }
 
   public static function fromItems(
-    Traversable<Pair<GenerateType, ClassFileGenerator>> $generators,
+    Traversable<NamedGenerator> $generators,
   ): this {
-    return new self(new GeneratorRegistry($generators));
+    return new self(GeneratorRegistry::fromItems($generators));
   }
 }
