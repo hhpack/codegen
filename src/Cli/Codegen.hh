@@ -25,6 +25,7 @@ use Facebook\HackCodegen\{
   CodegenFile,
   CodegenFileResult
 };
+use HH\Lib\{Vec,Str,Math};
 
 final class Codegen {
   const string PROGRAM_NAME = 'codegen';
@@ -119,12 +120,37 @@ final class Codegen {
   private function displayHelp(): void {
     fwrite(
       STDOUT,
-      sprintf("Usage: %s [OPTIONS] [TYPE] [NAME]\n\n", static::PROGRAM_NAME),
+      sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME),
     );
-    fwrite(STDOUT, "Arguments:\n");
-    fwrite(STDOUT, "  TYPE: generate type (ex. lib, test) \n");
-    fwrite(STDOUT, "  NAME: generate class name (ex. Foo\\Bar)\n\n");
+
+    fwrite(STDOUT, sprintf("Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n",
+      $this->generatorHelp()));
+
     $this->optionParser->displayHelp();
   }
 
+  private function generatorHelp(): string {
+    $mappedGenerators = $this->provider->generators();
+
+    $generators = ImmVector::fromItems($mappedGenerators);
+
+    $nameLength = Vec\map($generators, ($generator) ==> {
+      list($_, $g) = $generator;
+      return Str\length($g->name());
+    }) |> Math\max($$);
+
+    $formatter = ($generator) ==> {
+      list($_, $g) = $generator;
+      $paddingName = $g->name();
+      if ($nameLength !== null) {
+        $paddingName = Str\pad_right($g->name(), $nameLength);
+      }
+      return sprintf("    %s   %s", $paddingName, $g->description());
+    };
+
+    $help = Vec\map($generators, $formatter)
+      |> Str\join($$, "\n");
+
+    return sprintf("   GEN: generator name (ex. lib, test)\n%s\n", $help);
+  }
 }
