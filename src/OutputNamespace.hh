@@ -39,12 +39,8 @@ final class OutputNamespace {
    * echo $output->belongsNamespace("Foo1\\Bar1"); // Foo\\Bar\\Foo1\\Bar1
    * ```
    */
-  public function belongsNamespace(?string $name = null): string {
-    if (is_null($name)) {
-      return $this->name;
-    }
-
-    if (strlen($name) <= 0) {
+  public function belongsNamespace(string $name): string {
+    if (Str\length($name) <= 0) {
       return $this->name;
     }
 
