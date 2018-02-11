@@ -29,7 +29,7 @@ use HH\Lib\{Vec, Str, Math};
 
 final class Codegen {
   const string PROGRAM_NAME = 'codegen';
-  const string PROGRAM_VERSION = '0.1.1';
+  const string PROGRAM_VERSION = '0.2.0';
 
   private bool $help = false;
   private bool $version = false;
