@@ -11,6 +11,9 @@
 
 namespace HHPack\Codegen;
 
+use HHPack\Codegen\Contract\{NamedGenerator};
+use HH\Lib\{Vec};
+
 final class GeneratorRegistry {
   private ImmMap<GeneratorName, PackageClassFileGeneratable> $registry;
 
@@ -22,5 +25,14 @@ final class GeneratorRegistry {
 
   public function get(GeneratorName $name): PackageClassFileGeneratable {
     return $this->registry->at($name);
+  }
+
+  public static function fromItems(
+    Traversable<NamedGenerator> $generators
+  ): this {
+    $mappedGenerators = Vec\map($generators, ($generator) ==> {
+      return Pair { $generator->name(), $generator };
+    });
+    return new self($mappedGenerators);
   }
 }

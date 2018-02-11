@@ -11,9 +11,7 @@
 
 namespace HHPack\Codegen\Contract;
 
-use HHPack\Codegen\{GeneratorName};
-
 interface GeneratorProvider {
   public function generators(
-  ): Iterator<Pair<GeneratorName, NamedGenerator>>;
+  ): Iterator<NamedGenerator>;
 }

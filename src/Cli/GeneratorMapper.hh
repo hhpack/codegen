@@ -11,7 +11,7 @@
 
 namespace HHPack\Codegen\Cli;
 
-use HHPack\Codegen\{GeneratorName, ClassName, ClassFileGenerator};
+use HHPack\Codegen\{ClassName, ClassFileGenerator};
 
 final class GeneratorMapper {
 
@@ -19,10 +19,7 @@ final class GeneratorMapper {
 
   public function mapTo(
     ClassFileGenerator $generator,
-  ): Pair<GeneratorName, DefinedGenerator> {
-    return Pair {
-      $this->meta->name(),
-      new DefinedGenerator($this->meta, $generator),
-    };
+  ): DefinedGenerator {
+    return new DefinedGenerator($this->meta, $generator);
   }
 }

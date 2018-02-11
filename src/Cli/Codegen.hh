@@ -135,17 +135,15 @@ final class Codegen {
     $generators = ImmVector::fromItems($mappedGenerators);
 
     $nameLength = Vec\map($generators, ($generator) ==> {
-      list($_, $g) = $generator;
-      return Str\length($g->name());
+      return Str\length($generator->name());
     }) |> Math\max($$);
 
     $formatter = ($generator) ==> {
-      list($_, $g) = $generator;
-      $paddingName = $g->name();
+      $paddingName = $generator->name();
       if ($nameLength !== null) {
-        $paddingName = Str\pad_right($g->name(), $nameLength);
+        $paddingName = Str\pad_right($generator->name(), $nameLength);
       }
-      return sprintf("    %s   %s", $paddingName, $g->description());
+      return sprintf("    %s   %s", $paddingName, $generator->description());
     };
 
     $help = Vec\map($generators, $formatter)

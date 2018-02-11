@@ -10,6 +10,7 @@ use Facebook\HackCodegen\{
   CodegenFileResult
 };
 use HackPack\HackUnit\Contract\Assert;
+use HHPack\Codegen\Test\Mock\{NamedGeneratorMock};
 
 final class ProjectFileGeneratorTest {
   const string GENERATE_CLASS_NAME = 'Test\\Test1';
@@ -23,11 +24,10 @@ final class ProjectFileGeneratorTest {
   public static function generatorFactory(): this {
     $tempDirectory = sys_get_temp_dir();
     $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
-    $libraryGenerator = ProjectFileGenerator::fromItems(
-      [Pair {"test", $namespace->map(TestClassGenerator::class)}],
+    $projectGenerator = ProjectFileGenerator::fromItems(
+      [new NamedGeneratorMock("test", "test", $namespace->map(TestClassGenerator::class))]
     );
-
-    return new self($libraryGenerator, $tempDirectory);
+    return new self($projectGenerator, $tempDirectory);
   }
 
   <<Setup('test')>>
