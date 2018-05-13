@@ -23,7 +23,7 @@ final class ClassFileGeneratorTest {
 
   <<SuiteProvider('Factory')>>
   public static function generatorFactory(): this {
-    $tempDirectory = sys_get_temp_dir();
+    $tempDirectory = \sys_get_temp_dir();
     $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
 
     $config = (new HackCodegenConfig())->withRootDir($namespace->path());
@@ -38,21 +38,21 @@ final class ClassFileGeneratorTest {
 
   <<Setup('test')>>
   public function removeClassFile(): void {
-    $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
-    if (!file_exists($file)) {
+    $file = \sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
+    if (!\file_exists($file)) {
       return;
     }
-    unlink($file);
+    \unlink($file);
   }
 
   <<Test('Factory')>>
   public function test(Assert $assert): void {
-    $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
+    $file = \sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
 
     $result = $this->generator->generate(static::GENERATE_CLASS_NAME)->save();
 
     $assert->bool($result === CodegenFileResult::CREATE)->is(true);
-    $assert->bool(file_exists($file))->is(true);
+    $assert->bool(\file_exists($file))->is(true);
   }
 
 }

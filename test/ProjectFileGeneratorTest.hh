@@ -22,7 +22,7 @@ final class ProjectFileGeneratorTest {
 
   <<SuiteProvider('Factory')>>
   public static function generatorFactory(): this {
-    $tempDirectory = sys_get_temp_dir();
+    $tempDirectory = \sys_get_temp_dir();
     $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
     $projectGenerator = ProjectFileGenerator::fromItems(
       [
@@ -38,12 +38,12 @@ final class ProjectFileGeneratorTest {
 
   <<Setup('test')>>
   public function removeClassFile(): void {
-    $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
+    $file = \sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
 
-    if (!file_exists($file)) {
+    if (!\file_exists($file)) {
       return;
     }
-    unlink($file);
+    \unlink($file);
   }
 
   <<Test('Factory')>>
@@ -51,9 +51,9 @@ final class ProjectFileGeneratorTest {
     $newTestClass = Pair {'test', static::GENERATE_CLASS_NAME};
     $result = $this->generator->generate($newTestClass)->save();
 
-    $file = sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
+    $file = \sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
     $assert->bool($result === CodegenFileResult::CREATE)->is(true);
-    $assert->bool(file_exists($file))->is(true);
+    $assert->bool(\file_exists($file))->is(true);
   }
 
 }

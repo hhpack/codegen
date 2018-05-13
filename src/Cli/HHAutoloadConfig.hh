@@ -32,12 +32,12 @@ final class HHAutoloadConfig {
    * Load the configuration of hh_autoload
    */
   public static function fromFile(string $jsonPath): this {
-    if (!file_exists($jsonPath)) {
-      throw new \RuntimeException(sprintf("File %s not found", $jsonPath));
+    if (!\file_exists($jsonPath)) {
+      throw new \RuntimeException(\sprintf("File %s not found", $jsonPath));
     }
 
-    $autoloadJson = file_get_contents($jsonPath);
-    $json = json_decode($autoloadJson, true, 512, JSON_FB_HACK_ARRAYS);
+    $autoloadJson = \file_get_contents($jsonPath);
+    $json = \json_decode($autoloadJson, true, 512, \JSON_FB_HACK_ARRAYS);
     $validJson =
       matches_type_structure(type_structure(self::class, 'T'), $json);
 
@@ -49,7 +49,7 @@ final class HHAutoloadConfig {
   }
 
   public static function fromWorkingDirectory(): this {
-    return static::fromFile(getcwd().'/hh_autoload.json');
+    return static::fromFile(\getcwd().'/hh_autoload.json');
   }
 
   /**

@@ -86,11 +86,11 @@ final class Codegen {
     $result = $classFile->save();
 
     if ($result === CodegenFileResult::CREATE) {
-      $this->output->info(sprintf("File %s is created\n", $classFile->getFileName()));
+      $this->output->info(\sprintf("File %s is created\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::UPDATE) {
-      $this->output->info(sprintf("File %s is updated\n", $classFile->getFileName()));
+      $this->output->info(\sprintf("File %s is updated\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::NONE) {
-      $this->output->info(sprintf("File %s is already exists\n", $classFile->getFileName()));
+      $this->output->info(\sprintf("File %s is already exists\n", $classFile->getFileName()));
     }
   }
 
@@ -104,12 +104,12 @@ final class Codegen {
   }
 
   private function displayVersion(): void {
-    $this->output->info(sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION));
+    $this->output->info(\sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION));
   }
 
   private function displayHelp(): void {
-    $this->output->info(sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME));
-    $this->output->info(sprintf("Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n", $this->generatorHelp()));
+    $this->output->info(\sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME));
+    $this->output->info(\sprintf("Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n", $this->generatorHelp()));
     $this->optionParser->displayHelp();
   }
 
@@ -131,12 +131,12 @@ final class Codegen {
       if ($nameLength !== null) {
         $paddingName = Str\pad_right($generator->name(), $nameLength);
       }
-      return sprintf("    %s   %s", $paddingName, $generator->description());
+      return \sprintf("    %s   %s", $paddingName, $generator->description());
     };
 
     $help = Vec\map($generators, $formatter)
       |> Str\join($$, "\n");
 
-    return sprintf("   GEN: generator name (ex. lib, test)\n%s\n", $help);
+    return \sprintf("   GEN: generator name (ex. lib, test)\n%s\n", $help);
   }
 }

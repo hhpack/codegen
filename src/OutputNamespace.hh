@@ -66,7 +66,7 @@ final class OutputNamespace {
     $className = C\lastx($parts);
     $subNamespace =
       $parts
-        |> Vec\slice($$, 0, count($$) - 1)
+        |> Vec\slice($$, 0, \count($$) - 1)
         |> Str\join($$, '\\');
 
     $namespace = $this->belongsNamespace($subNamespace);

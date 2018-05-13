@@ -23,7 +23,7 @@ final class DevGeneratorProvider implements GeneratorProvider {
   public function generators(): Iterator<NamedGenerator> {
     $generator = $this->loadFromPath($this->paths)->firstValue();
 
-    if (is_null($generator)) {
+    if (\is_null($generator)) {
       throw new \RuntimeException('generator not found');
     }
 
@@ -46,7 +46,7 @@ final class DevGeneratorProvider implements GeneratorProvider {
   }
 
   private function findGeneratorByPath(string $path): ImmSet<string> {
-    $parser = TreeParser::FromPath(getcwd().'/'.$path);
+    $parser = TreeParser::FromPath(\getcwd().'/'.$path);
 
     $classNames =
       $parser->getClasses()
