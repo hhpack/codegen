@@ -16,6 +16,7 @@ RUN mkdir project
 WORKDIR project
 ADD src src
 ADD test test
+ADD example example
 ADD composer.json composer.json
 ADD hh_autoload.json hh_autoload.json
 ADD .hhconfig .hhconfig
