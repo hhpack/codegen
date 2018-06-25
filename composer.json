@@ -20,7 +20,7 @@
     "hhpack/getopt": "^1.4.0",
     "facebook/definition-finder": "^1.6",
     "hhvm/type-assert": "^3.2",
-    "hhvm/hsl": "^1.0"
+    "hhvm/hsl": "^3.27"
   },
   "require-dev": {
     "hackpack/hackunit": "^1.1"

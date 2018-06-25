@@ -41,10 +41,6 @@ final class HHAutoloadConfig {
     $validJson =
       matches_type_structure(type_structure(self::class, 'T'), $json);
 
-    if (!Shapes::keyExists($validJson, 'devRoots')) {
-      throw new \RuntimeException('devRoots is not in the configuration');
-    }
-
     return new self($validJson);
   }
 
