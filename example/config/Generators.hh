@@ -3,7 +3,7 @@
 namespace HHPack\Codegen\Example;
 
 use HHPack\Codegen\Contract\{NamedGenerator, GeneratorProvider};
-use HHPack\Codegen\HackUnit\{TestClassGenerator};
+use HHPack\Codegen\HackTest\{TestClassGenerator};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use function HHPack\Codegen\Cli\{define_generator, namespace_of};
 
