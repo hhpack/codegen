@@ -17,7 +17,7 @@ use Facebook\HackCodegen\{
   ICodegenFactory,
   CodegenFile,
   CodegenClass,
-  CodegenMethod
+  CodegenMethod,
 };
 
 final class TestClassGenerator implements ClassFileGeneratable {
@@ -29,31 +29,28 @@ final class TestClassGenerator implements ClassFileGeneratable {
   }
 
   public function generate(GenerateClassFile $target): CodegenFile {
-    return
-      $this->cg
-        ->codegenFile($target->fileName())
-        ->setNamespace($target->belongsNamespace())
-        ->useNamespace('HackPack\HackUnit\Contract\Assert')
-        ->addClass($this->classOf($target->name()));
+    return $this->cg
+      ->codegenFile($target->fileName())
+      ->setNamespace($target->belongsNamespace())
+      ->useNamespace('HackPack\HackUnit\Contract\Assert')
+      ->addClass($this->classOf($target->name()));
   }
 
   private function classOf(string $className): CodegenClass {
-    return
-      $this->cg
-        ->codegenClass($className)
-        ->setIsFinal(true)
-        ->addMethod($this->exampleTestMethod());
+    return $this->cg
+      ->codegenClass($className)
+      ->setIsFinal(true)
+      ->addMethod($this->exampleTestMethod());
   }
 
   private function exampleTestMethod(): CodegenMethod {
-    return
-      $this->cg
-        ->codegenMethod('exampleTest')
-        ->setIsFinal(true)
-        ->addEmptyUserAttribute('Test')
-        ->addParameter('Assert $assert')
-        ->setReturnType('void')
-        ->setBody('$assert->bool(true)->is(true);');
+    return $this->cg
+      ->codegenMethod('exampleTest')
+      ->setIsFinal(true)
+      ->addEmptyUserAttribute('Test')
+      ->addParameter('Assert $assert')
+      ->setReturnType('void')
+      ->setBody('$assert->bool(true)->is(true);');
   }
 
 }

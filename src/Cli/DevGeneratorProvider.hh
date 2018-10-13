@@ -32,9 +32,8 @@ final class DevGeneratorProvider implements GeneratorProvider {
   }
 
   private function loadFromPath(Traversable<string> $paths): ImmSet<string> {
-    $generatorClassNames =
-      ImmVector::fromItems($paths)
-        ->map(($path) ==> $this->findGeneratorByPath($path));
+    $generatorClassNames = ImmVector::fromItems($paths)
+      ->map(($path) ==> $this->findGeneratorByPath($path));
 
     $result = Set {};
 
@@ -48,17 +47,16 @@ final class DevGeneratorProvider implements GeneratorProvider {
   private function findGeneratorByPath(string $path): ImmSet<string> {
     $parser = \HH\Asio\join(TreeParser::fromPathAsync(\getcwd().'/'.$path));
 
-    $classNames =
-      $parser->getClasses()
-        |> Vec\filter($$, ($class) ==> $this->isImplementProvider($class))
-        |> Vec\map($$, ($class) ==> $class->getName());
+    $classNames = $parser->getClasses()
+      |> Vec\filter($$, ($class) ==> $this->isImplementProvider($class))
+      |> Vec\map($$, ($class) ==> $class->getName());
 
     return ImmSet::fromItems($classNames);
   }
 
   private function isImplementProvider(ScannedClass $class): bool {
-    $implementInterface = ($interface) ==> $interface ===
-    GeneratorProvider::class;
+    $implementInterface =
+      ($interface) ==> $interface === GeneratorProvider::class;
 
     $interfaces = $class->getInterfaceNames();
     $macthedInterfaces = $interfaces |> Vec\filter($$, $implementInterface);

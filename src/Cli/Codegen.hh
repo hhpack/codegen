@@ -12,7 +12,7 @@
 namespace HHPack\Codegen\Cli;
 
 use HHPack\Codegen\{ProjectFileGenerator, GeneratorName, ClassName};
-use HHPack\Codegen\Contract\{Output,GeneratorProvider};
+use HHPack\Codegen\Contract\{Output, GeneratorProvider};
 use HHPack\Codegen\Project\{PackageClassGenerator};
 use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use function HHPack\Getopt\{optparser, take_on, on};
@@ -23,7 +23,7 @@ use Facebook\HackCodegen\{
   HackCodegenFactory,
   HackCodegenConfig,
   CodegenFile,
-  CodegenFileResult
+  CodegenFileResult,
 };
 use HH\Lib\{Vec, Str, Math};
 
@@ -36,9 +36,7 @@ final class Codegen {
   private OptionParser $optionParser;
   private GeneratorProvider $provider;
 
-  public function __construct(
-    private Output $output = new ConsoleOutput()
-  ) {
+  public function __construct(private Output $output = new ConsoleOutput()) {
     $this->optionParser = optparser(
       [
         on(
@@ -75,7 +73,7 @@ final class Codegen {
       $type = $remainArgs->at(0);
       $name = $remainArgs->at(1);
 
-      $this->generateBy(Pair {$type, $name});
+      $this->generateBy(Pair { $type, $name });
     }
   }
 
@@ -86,11 +84,16 @@ final class Codegen {
     $result = $classFile->save();
 
     if ($result === CodegenFileResult::CREATE) {
-      $this->output->info(\sprintf("File %s is created\n", $classFile->getFileName()));
+      $this->output
+        ->info(\sprintf("File %s is created\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::UPDATE) {
-      $this->output->info(\sprintf("File %s is updated\n", $classFile->getFileName()));
+      $this->output
+        ->info(\sprintf("File %s is updated\n", $classFile->getFileName()));
     } else if ($result === CodegenFileResult::NONE) {
-      $this->output->info(\sprintf("File %s is already exists\n", $classFile->getFileName()));
+      $this->output
+        ->info(
+          \sprintf("File %s is already exists\n", $classFile->getFileName()),
+        );
     }
   }
 
@@ -104,12 +107,22 @@ final class Codegen {
   }
 
   private function displayVersion(): void {
-    $this->output->info(\sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION));
+    $this->output
+      ->info(
+        \sprintf("%s - %s\n", static::PROGRAM_NAME, static::PROGRAM_VERSION),
+      );
   }
 
   private function displayHelp(): void {
-    $this->output->info(\sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME));
-    $this->output->info(\sprintf("Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n", $this->generatorHelp()));
+    $this->output
+      ->info(
+        \sprintf("Usage: %s [OPTIONS] [GEN] [NAME]\n\n", static::PROGRAM_NAME),
+      );
+    $this->output
+      ->info(\sprintf(
+        "Arguments:\n%s\n  NAME: generate class name (ex. Foo\\Bar)\n\n",
+        $this->generatorHelp(),
+      ));
     $this->optionParser->displayHelp();
   }
 
@@ -118,13 +131,13 @@ final class Codegen {
 
     $generators = ImmVector::fromItems($mappedGenerators);
 
-    $nameLength =
-      Vec\map(
-        $generators,
-        ($generator) ==> {
-          return Str\length($generator->name());
-        },
-      ) |> Math\max($$);
+    $nameLength = Vec\map(
+      $generators,
+      ($generator) ==> {
+        return Str\length($generator->name());
+      },
+    )
+      |> Math\max($$);
 
     $formatter = ($generator) ==> {
       $paddingName = $generator->name();

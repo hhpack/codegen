@@ -23,9 +23,8 @@ final class HHAutoloadConfig {
   public function __construct(private this::T $config) {}
 
   public function devRoots(): ImmSet<string> {
-    return
-      ImmSet::fromItems($this->config['devRoots'])
-        ->map(($path) ==> $this->normalizePath($path));
+    return ImmSet::fromItems($this->config['devRoots'])
+      ->map(($path) ==> $this->normalizePath($path));
   }
 
   /**

@@ -11,6 +11,8 @@ final class OutputNamespaceTest extends HackTest {
     $ns = new OutputNamespace("Foo\\Bar", "/var/tmp");
 
     expect($ns->belongsNamespace("Bar1"))->toBeSame("Foo\\Bar\\Bar1");
-    expect($ns->belongsNamespace("Bar1\\Bar2"))->toBeSame("Foo\\Bar\\Bar1\\Bar2");
+    expect($ns->belongsNamespace("Bar1\\Bar2"))->toBeSame(
+      "Foo\\Bar\\Bar1\\Bar2",
+    );
   }
 }

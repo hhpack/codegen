@@ -7,7 +7,7 @@ use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
   HackCodegenConfig,
-  CodegenFileResult
+  CodegenFileResult,
 };
 use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;

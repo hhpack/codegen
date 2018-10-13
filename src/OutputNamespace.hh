@@ -64,10 +64,9 @@ final class OutputNamespace {
   public function classNameOf(string $name): OutputClassName {
     $parts = Str\split($name, '\\');
     $className = C\lastx($parts);
-    $subNamespace =
-      $parts
-        |> Vec\slice($$, 0, \count($$) - 1)
-        |> Str\join($$, '\\');
+    $subNamespace = $parts
+      |> Vec\slice($$, 0, \count($$) - 1)
+      |> Str\join($$, '\\');
 
     $namespace = $this->belongsNamespace($subNamespace);
 

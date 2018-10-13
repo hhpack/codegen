@@ -7,7 +7,7 @@ use HHPack\Codegen\HackUnit\{TestClassGenerator};
 use Facebook\HackCodegen\{
   HackCodegenFactory,
   HackCodegenConfig,
-  CodegenFileResult
+  CodegenFileResult,
 };
 use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
@@ -24,7 +24,8 @@ final class TestClassGeneratorTest extends HackTest {
   }
 
   public function provideGenerators(): vec<(TestClassGenerator)> {
-    $config = (new HackCodegenConfig())->withRootDir($this->currentTempDirectory());
+    $config =
+      (new HackCodegenConfig())->withRootDir($this->currentTempDirectory());
     $generator = new TestClassGenerator(new HackCodegenFactory($config));
     return vec[tuple($generator)];
   }

@@ -24,11 +24,10 @@ final class PackageClassGenerator implements ClassFileGeneratable {
   }
 
   public function generate(GenerateClassFile $target): CodegenFile {
-    return
-      $this->cg
-        ->codegenFile($target->fileName())
-        ->setNamespace($target->belongsNamespace())
-        ->addClass($this->classOf($target->name()));
+    return $this->cg
+      ->codegenFile($target->fileName())
+      ->setNamespace($target->belongsNamespace())
+      ->addClass($this->classOf($target->name()));
   }
 
   private function classOf(string $className): CodegenClass {

@@ -29,11 +29,10 @@ final class OutputClassName {
   }
 
   public function withoutNamespace(string $namespace): string {
-    $v =
-      Str\replace($this->namespace, $namespace, '')
-        |> Str\split($$, '\\')
-        |> Vec\slice($$, 1)
-        |> Str\join($$, '\\');
+    $v = Str\replace($this->namespace, $namespace, '')
+      |> Str\split($$, '\\')
+      |> Vec\slice($$, 1)
+      |> Str\join($$, '\\');
 
     if (Str\length($v) <= 0) {
       return $this->name;

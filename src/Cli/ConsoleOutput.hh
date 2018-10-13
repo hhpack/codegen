@@ -17,7 +17,7 @@ use SplFileObject;
 
 final class ConsoleOutput implements Output {
   public function __construct(
-    private SplFileObject $stdout = new SplFileObject("php://stdout")
+    private SplFileObject $stdout = new SplFileObject("php://stdout"),
   ) {
   }
 
