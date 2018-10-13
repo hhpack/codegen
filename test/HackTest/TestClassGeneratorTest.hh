@@ -1,6 +1,6 @@
 <?hh //strict
 
-namespace HHPack\Codegen\Test\HackTest;
+namespace HHPack\Codegen\Test\HackUnit;
 
 use HHPack\Codegen\{GenerateClassFile, OutputClassName};
 use HHPack\Codegen\HackTest\{TestClassGenerator};
