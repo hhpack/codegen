@@ -3,11 +3,11 @@
 namespace HHPack\Codegen\Test;
 
 use HHPack\Codegen\Cli\{HHAutoloadConfig};
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class HHAutoloadConfigTest {
-  <<Test>>
-  public function testDevRoots(Assert $assert): void {
+final class HHAutoloadConfigTest extends HackTest {
+  public function testDevRoots(): void {
     $config = new HHAutoloadConfig(
       shape(
         'roots' => ['/example/path/to/'],
@@ -16,6 +16,6 @@ final class HHAutoloadConfigTest {
     );
 
     $v = $config->devRoots()->toImmVector();
-    $assert->string($v->at(0))->is("example/path/to");
+    expect($v->at(0))->toBeSame("example/path/to");
   }
 }

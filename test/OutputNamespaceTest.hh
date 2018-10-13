@@ -3,14 +3,14 @@
 namespace HHPack\Codegen\Test;
 
 use HHPack\Codegen\{OutputNamespace};
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class OutputNamespaceTest {
-  <<Test>>
-  public function belongsNamespace(Assert $assert): void {
+final class OutputNamespaceTest extends HackTest {
+  public function testBelongsNamespace(): void {
     $ns = new OutputNamespace("Foo\\Bar", "/var/tmp");
 
-    $assert->string($ns->belongsNamespace("Bar1"))->is("Foo\\Bar\\Bar1");
-    $assert->string($ns->belongsNamespace("Bar1\\Bar2"))->is("Foo\\Bar\\Bar1\\Bar2");
+    expect($ns->belongsNamespace("Bar1"))->toBeSame("Foo\\Bar\\Bar1");
+    expect($ns->belongsNamespace("Bar1\\Bar2"))->toBeSame("Foo\\Bar\\Bar1\\Bar2");
   }
 }

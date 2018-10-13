@@ -46,7 +46,7 @@ final class DevGeneratorProvider implements GeneratorProvider {
   }
 
   private function findGeneratorByPath(string $path): ImmSet<string> {
-    $parser = TreeParser::FromPath(\getcwd().'/'.$path);
+    $parser = \HH\Asio\join(TreeParser::fromPathAsync(\getcwd().'/'.$path));
 
     $classNames =
       $parser->getClasses()
