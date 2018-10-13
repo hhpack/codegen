@@ -15,6 +15,7 @@ WORKDIR /home/${hack_user}
 RUN mkdir project
 WORKDIR project
 ADD src src
+ADD example example
 ADD test test
 ADD example example
 ADD composer.json composer.json

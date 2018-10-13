@@ -3,20 +3,19 @@
 namespace HHPack\Codegen\Test;
 
 use HHPack\Codegen\{OutputClassName};
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class OutputClassNameTest {
-  <<Test>>
-  public function fromWithNamespace(Assert $assert): void {
+final class OutputClassNameTest extends HackTest {
+  public function testFromWithNamespace(): void {
     $className = OutputClassName::fromString("Foo\\Bar");
-    $assert->string($className->namespace())->is("Foo");
-    $assert->string($className->name())->is("Bar");
+    expect($className->namespace())->toBeSame("Foo");
+    expect($className->name())->toBeSame("Bar");
   }
 
-  <<Test>>
-  public function fromWithoutNamespace(Assert $assert): void {
+  public function testFromWithoutNamespace(): void {
     $className = OutputClassName::fromString("Foo");
-    $assert->string($className->namespace())->is("");
-    $assert->string($className->name())->is("Foo");
+    expect($className->namespace())->toBeSame("");
+    expect($className->name())->toBeSame("Foo");
   }
 }

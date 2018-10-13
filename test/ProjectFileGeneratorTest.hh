@@ -9,21 +9,29 @@ use Facebook\HackCodegen\{
   HackCodegenConfig,
   CodegenFileResult
 };
-use HackPack\HackUnit\Contract\Assert;
 use HHPack\Codegen\Test\Mock\{NamedGeneratorMock};
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class ProjectFileGeneratorTest {
+final class ProjectFileGeneratorTest extends HackTest {
   const string GENERATE_CLASS_NAME = 'Test\\Test1';
 
-  public function __construct(
-    private ProjectFileGenerator $generator,
-    private string $tempDirectory,
-  ) {}
+  <<__Memoize>>
+  public function currentTempDirectory(): string {
+    return \sys_get_temp_dir();
+  }
 
-  <<SuiteProvider('Factory')>>
-  public static function generatorFactory(): this {
-    $tempDirectory = \sys_get_temp_dir();
-    $namespace = new OutputNamespace('Foo\\Bar', $tempDirectory);
+  public async function beforeEachTestAsync(): Awaitable<void> {
+    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hh');
+
+    if (!\file_exists($file)) {
+      return;
+    }
+    \unlink($file);
+  }
+
+  public function provideGenerator(): vec<(ProjectFileGenerator)> {
+    $namespace = new OutputNamespace('Foo\\Bar', $this->currentTempDirectory());
     $projectGenerator = ProjectFileGenerator::fromItems(
       [
         new NamedGeneratorMock(
@@ -33,27 +41,17 @@ final class ProjectFileGeneratorTest {
         ),
       ],
     );
-    return new self($projectGenerator, $tempDirectory);
+    return vec[tuple($projectGenerator)];
   }
 
-  <<Setup('test')>>
-  public function removeClassFile(): void {
-    $file = \sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
-
-    if (!\file_exists($file)) {
-      return;
-    }
-    \unlink($file);
-  }
-
-  <<Test('Factory')>>
-  public function test(Assert $assert): void {
+  <<DataProvider('provideGenerator')>>
+  public function test(ProjectFileGenerator $generator): void {
     $newTestClass = Pair {'test', static::GENERATE_CLASS_NAME};
-    $result = $this->generator->generate($newTestClass)->save();
+    $result = $generator->generate($newTestClass)->save();
 
-    $file = \sprintf("%s/%s", $this->tempDirectory, 'Test/Test1.hh');
-    $assert->bool($result === CodegenFileResult::CREATE)->is(true);
-    $assert->bool(\file_exists($file))->is(true);
+    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hh');
+    expect($result === CodegenFileResult::CREATE)->toBeTrue();
+    expect(\file_exists($file))->toBeTrue();
   }
 
 }

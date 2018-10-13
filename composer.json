@@ -18,19 +18,14 @@
     "hhvm/hhvm-autoload": "^1.5",
     "facebook/hack-codegen": "^3.0",
     "hhpack/getopt": "^1.4.0",
-    "facebook/definition-finder": "^1.6",
+    "facebook/definition-finder": "^2.1",
     "hhvm/type-assert": "^3.2",
     "hhvm/hsl": "^3.27"
   },
   "require-dev": {
-    "hackpack/hackunit": "^1.1"
+    "hhvm/hacktest": "^1.1",
+    "facebook/fbexpect": "^2.1"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/holyshared/HackUnit"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "HHPack\\Codegen\\": "src"
@@ -38,7 +33,7 @@
   },
   "minimum-stability": "stable",
   "scripts": {
-    "test": "vendor/bin/hackunit test",
+    "test": "vendor/bin/hacktest test",
     "check:init": "touch .hhconfig"
   }
 }
