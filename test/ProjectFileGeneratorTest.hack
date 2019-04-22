@@ -20,7 +20,7 @@ final class ProjectFileGeneratorTest extends HackTest {
   }
 
   public async function beforeEachTestAsync(): Awaitable<void> {
-    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hh');
+    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hack');
 
     if (!\file_exists($file)) {
       return;
@@ -47,7 +47,7 @@ final class ProjectFileGeneratorTest extends HackTest {
     $newTestClass = Pair {'test', static::GENERATE_CLASS_NAME};
     $result = $generator->generate($newTestClass)->save();
 
-    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hh');
+    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hack');
     expect($result === CodegenFileResult::CREATE)->toBeTrue();
     expect(\file_exists($file))->toBeTrue();
   }

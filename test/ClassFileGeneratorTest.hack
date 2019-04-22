@@ -29,7 +29,7 @@ final class ClassFileGeneratorTest extends HackTest {
   }
 
   public async function beforeEachTestAsync(): Awaitable<void> {
-    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hh');
+    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hack');
 
     if (!\file_exists($file)) {
       return;
@@ -39,7 +39,7 @@ final class ClassFileGeneratorTest extends HackTest {
 
   <<DataProvider('provideGenerater')>>
   public function test(ClassFileGenerator $generator): void {
-    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hh');
+    $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hack');
 
     $result = $generator->generate(static::GENERATE_CLASS_NAME)->save();
 

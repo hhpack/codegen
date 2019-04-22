@@ -42,7 +42,7 @@ final class OutputClassName {
   public function relativeFilePath(string $namespace): string {
     $path = Str\split($this->withoutNamespace($namespace), '\\')
       |> Str\join($$, '/');
-    return $path.'.hh';
+    return $path.'.hack';
   }
 
   public static function fromString(string $name): this {

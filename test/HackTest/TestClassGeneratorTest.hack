@@ -14,7 +14,7 @@ final class TestClassGeneratorTest extends HackTest {
 
   const string NS = 'Foo\\Bar\\Test';
   const string CN = 'Test1';
-  const string CF = 'Test/Test1.hh';
+  const string CF = 'Test/Test1.hack';
 
   <<__Memoize>>
   public function currentTempDirectory(): string {

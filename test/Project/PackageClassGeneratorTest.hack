@@ -14,7 +14,7 @@ final class PackageClassGeneratorTest extends HackTest {
 
   const string NS = 'Foo\\Bar\\Library';
   const string CN = 'Library1';
-  const string CF = 'Library/Library1.hh';
+  const string CF = 'Library/Library1.hack';
 
   <<__Memoize>>
   public function currentTempDirectory(): string {
