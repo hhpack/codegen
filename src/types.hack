@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of hhpack\codegen.
  *
@@ -9,11 +7,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen\Contract;
+namespace HHPack\Codegen;
 
-use HHPack\Codegen\{ClassName};
+use HHPack\Codegen\Contract\{FileGeneratable};
 
-interface NamedGenerator extends FileGeneratable<ClassName> {
-  public function name(): string;
-  public function description(): string;
-}
+type GeneratorName = string;
+
+type ClassName = string;
+
+type PackageClassFileGeneratable = FileGeneratable<ClassName>;

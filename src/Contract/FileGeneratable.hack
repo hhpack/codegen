@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of hhpack\codegen.
  *
@@ -11,6 +9,8 @@
 
 namespace HHPack\Codegen\Contract;
 
-interface Output {
-  public function info(string $message): void;
+use Facebook\HackCodegen\{CodegenFile};
+
+interface FileGeneratable<T> {
+  public function generate(T $target): CodegenFile;
 }

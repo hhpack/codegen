@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Codegen\Example;
 
 use HHPack\Codegen\Contract\{NamedGenerator, GeneratorProvider};

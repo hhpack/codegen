@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of hhpack\codegen.
  *
@@ -9,18 +7,13 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen\HackTest;
+namespace HHPack\Codegen\Project;
 
 use HHPack\Codegen\{GenerateClassFile};
-use HHPack\Codegen\Contract\{FileGeneratable, ClassFileGeneratable};
-use Facebook\HackCodegen\{
-  ICodegenFactory,
-  CodegenFile,
-  CodegenClass,
-  CodegenMethod,
-};
+use HHPack\Codegen\Contract\{ClassFileGeneratable};
+use Facebook\HackCodegen\{ICodegenFactory, CodegenFile, CodegenClass};
 
-final class TestClassGenerator implements ClassFileGeneratable {
+final class PackageClassGenerator implements ClassFileGeneratable {
 
   public function __construct(private ICodegenFactory $cg) {}
 
@@ -32,24 +25,11 @@ final class TestClassGenerator implements ClassFileGeneratable {
     return $this->cg
       ->codegenFile($target->fileName())
       ->setNamespace($target->belongsNamespace())
-      ->useType('Facebook\HackTest\HackTest')
-      ->useFunction('Facebook\FBExpect\expect')
       ->addClass($this->classOf($target->name()));
   }
 
   private function classOf(string $className): CodegenClass {
-    return $this->cg
-      ->codegenClass($className)
-      ->setExtends('HackTest')
-      ->setIsFinal(true)
-      ->addMethod($this->exampleTestMethod());
-  }
-
-  private function exampleTestMethod(): CodegenMethod {
-    return $this->cg
-      ->codegenMethod('testExample')
-      ->setReturnType('void')
-      ->setBody('expect(true)->toBeTrue();');
+    return $this->cg->codegenClass($className)->setIsFinal(true);
   }
 
 }

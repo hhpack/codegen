@@ -1,5 +1,3 @@
-<?hh //strict
-
 /**
  * This file is part of hhpack\codegen.
  *
@@ -9,12 +7,8 @@
  * with this source code in the file LICENSE.
  */
 
-namespace HHPack\Codegen;
+namespace HHPack\Codegen\Contract;
 
-use HHPack\Codegen\Contract\{FileGeneratable};
-
-type GeneratorName = string;
-
-type ClassName = string;
-
-type PackageClassFileGeneratable = FileGeneratable<ClassName>;
+interface Output {
+  public function info(string $message): void;
+}

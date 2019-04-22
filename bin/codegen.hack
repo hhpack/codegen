@@ -1,5 +1,3 @@
-<?hh //partial
-
 namespace HHPack\Codegen;
 
 use Facebook\HackCodegen\{
