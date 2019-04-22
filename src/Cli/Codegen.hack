@@ -71,7 +71,7 @@ final class Codegen {
       $type = $remainArgs->at(0);
       $name = $remainArgs->at(1);
 
-      $this->generateBy(Pair { $type, $name });
+      $this->generateBy(Pair {$type, $name});
     }
   }
 

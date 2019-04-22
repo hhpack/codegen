@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Codegen\Test;
 
 use HHPack\Codegen\{ProjectFileGenerator, OutputNamespace};
@@ -10,7 +8,7 @@ use Facebook\HackCodegen\{
   CodegenFileResult,
 };
 use HHPack\Codegen\Test\Mock\{NamedGeneratorMock};
-use type Facebook\HackTest\HackTest;
+use type Facebook\HackTest\{HackTest, DataProvider};
 use function Facebook\FBExpect\expect;
 
 final class ProjectFileGeneratorTest extends HackTest {
@@ -46,7 +44,7 @@ final class ProjectFileGeneratorTest extends HackTest {
 
   <<DataProvider('provideGenerator')>>
   public function test(ProjectFileGenerator $generator): void {
-    $newTestClass = Pair { 'test', static::GENERATE_CLASS_NAME };
+    $newTestClass = Pair {'test', static::GENERATE_CLASS_NAME};
     $result = $generator->generate($newTestClass)->save();
 
     $file = \sprintf("%s/%s", $this->currentTempDirectory(), 'Test/Test1.hh');

@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Codegen\Test\Mock;
 
 use HHPack\Codegen\{ClassName};

@@ -53,8 +53,8 @@ final class DevGeneratorProvider implements GeneratorProvider {
   }
 
   private function isImplementProvider(ScannedClass $class): bool {
-    $implementInterface =
-      ($interface) ==> $interface === GeneratorProvider::class;
+    $implementInterface = ($interface) ==>
+      $interface === GeneratorProvider::class;
 
     $interfaces = $class->getInterfaceNames();
     $macthedInterfaces = $interfaces |> Vec\filter($$, $implementInterface);

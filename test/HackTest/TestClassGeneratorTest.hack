@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Codegen\Test\HackUnit;
 
 use HHPack\Codegen\{GenerateClassFile, OutputClassName};
@@ -9,7 +7,7 @@ use Facebook\HackCodegen\{
   HackCodegenConfig,
   CodegenFileResult,
 };
-use type Facebook\HackTest\HackTest;
+use type Facebook\HackTest\{HackTest, DataProvider};
 use function Facebook\FBExpect\expect;
 
 final class TestClassGeneratorTest extends HackTest {
@@ -24,8 +22,9 @@ final class TestClassGeneratorTest extends HackTest {
   }
 
   public function provideGenerators(): vec<(TestClassGenerator)> {
-    $config =
-      (new HackCodegenConfig())->withRootDir($this->currentTempDirectory());
+    $config = (new HackCodegenConfig())->withRootDir(
+      $this->currentTempDirectory(),
+    );
     $generator = new TestClassGenerator(new HackCodegenFactory($config));
     return vec[tuple($generator)];
   }

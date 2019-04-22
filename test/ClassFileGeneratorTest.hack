@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Codegen\Test;
 
 use HHPack\Codegen\{ClassFileGenerator, OutputNamespace};
@@ -9,7 +7,7 @@ use Facebook\HackCodegen\{
   HackCodegenConfig,
   CodegenFileResult,
 };
-use type Facebook\HackTest\HackTest;
+use type Facebook\HackTest\{HackTest, DataProvider};
 use function Facebook\FBExpect\expect;
 
 final class ClassFileGeneratorTest extends HackTest {

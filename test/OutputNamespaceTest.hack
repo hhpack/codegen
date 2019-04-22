@@ -1,5 +1,3 @@
-<?hh //strict
-
 namespace HHPack\Codegen\Test;
 
 use HHPack\Codegen\{OutputNamespace};

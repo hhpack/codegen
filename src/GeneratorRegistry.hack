@@ -31,7 +31,7 @@ final class GeneratorRegistry {
     $mappedGenerators = Vec\map(
       $generators,
       ($generator) ==> {
-        return Pair { $generator->name(), $generator };
+        return Pair {$generator->name(), $generator};
       },
     );
     return new self($mappedGenerators);

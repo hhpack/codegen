@@ -1,0 +1,27 @@
+[bin/**/*.hack]
+indent_style = space
+indent_size = 2
+
+[src/**/*.hack]
+indent_style = space
+indent_size = 2
+
+[test/**/*Test.hack]
+indent_style = space
+indent_size = 2
+
+[example/**/*.hack]
+indent_style = space
+indent_size = 2
+
+[*.md]
+indent_style = tab
+indent_size = 2
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+[*.py]
+indent_style = space
+indent_size = 2
