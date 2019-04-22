@@ -1,6 +1,6 @@
 # Codegen
 
-[![Build Status](https://travis-ci.org/hhpack/codegen.svg?branch=develop)](https://travis-ci.org/hhpack/codegen)
+[![CircleCI](https://circleci.com/gh/hhpack/codegen/tree/master.svg?style=svg)](https://circleci.com/gh/hhpack/codegen/tree/master)
 
 This package provides cli program to generate source code.  
 You can map generators to **namespaces** in the configuration file.  
@@ -13,8 +13,6 @@ Create a configuration file that specifies the generator class.
 In the configuration file, you define the namespace and generator linkage.  
 
 ```hack
-<?hh //strict
-
 namespace MyPackage\Generators;
 
 use HHPack\Codegen\Contract\{NamedGenerator, GeneratorProvider};
